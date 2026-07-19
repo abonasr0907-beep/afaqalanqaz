@@ -5,26 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
-    <!-- SEO Meta Tags -->
     <title>آفاق الإنجاز العقاري | Afagh Al-Enjaz Real Estate</title>
-    <meta name="description" content="مكتب آفاق الإنجاز العقاري - 20 سنة خبرة، أكثر من 500 عقار، أراضي زراعية، استراحات فاخرة، أراضي سكنية في الرياض والخرج">
-    <meta name="keywords" content="آفاق الإنجاز العقاري, أراضي زراعية, ستراحات, الخرج, الرياض, العفجة, الشديدة, الريحان, الرحمانية, استثمار عقاري">
-    <meta name="author" content="آفاق الإنجاز العقاري">
-    <meta name="robots" content="index, follow">
+    <meta name="description" content="مكتب آفاق الإنجاز العقاري - 20 سنة خبرة، خدمات عقارية متكاملة، مزارع، استراحات، وأراضي في الرياض والخرج والدلم">
+    <meta name="keywords" content="آفاق الإنجاز العقاري, رخص البناء, مقاولات, تشطيب, إدارة املاك, حفر ابار, أراضي زراعية, استراحات, الخرج, الدلم, الرياض">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="آفاق الإنجاز العقاري - 20 سنة من الخبرة">
-    <meta property="og:description" content="أكثر من 500 عقار و10,000 عميل سعيد">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://abonasr0907-beep.github.io/afaqalanqaz/">
-    
-    <!-- Fonts & Libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -36,7 +25,6 @@
                         'secondary': '#43A047',
                         'accent': '#FFB300',
                         'bg-light': '#F8FAFC',
-                        'bg-cream': '#FFFBF0',
                         'text-dark': '#1E293B',
                         'text-light': '#64748B'
                     },
@@ -48,353 +36,644 @@
     
     <style>
         * { font-family: 'Tajawal', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; overflow-x: hidden; }
-        body { background: linear-gradient(135deg, #F8FAFC 0%, #FFFBF0 100%); overflow-x: hidden; line-height: 1.6; }
+        body { background: #F8FAFC; overflow-x: hidden; line-height: 1.6; color: #1E293B; }
         
-        /* Animated Background */
-        .bg-slideshow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.06;
-        }
-        .bg-slideshow img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            animation: bgSlide 24s infinite;
-        }
-        .bg-slideshow img:nth-child(1) { animation-delay: 0s; }
-        .bg-slideshow img:nth-child(2) { animation-delay: 6s; }
-        .bg-slideshow img:nth-child(3) { animation-delay: 12s; }
-        .bg-slideshow img:nth-child(4) { animation-delay: 18s; }
-        
-        @keyframes bgSlide {
-            0%, 20% { opacity: 0.4; transform: scale(1); }
-            25%, 45% { opacity: 0; transform: scale(1.1); }
-            50%, 70% { opacity: 0.4; transform: scale(1); }
-            75%, 95% { opacity: 0; transform: scale(1.1); }
-            100% { opacity: 0.4; transform: scale(1); }
-        }
-        
-        /* Particles */
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
-        .particle {
-            position: absolute;
-            background: linear-gradient(135deg, #1E88E5, #43A047);
-            border-radius: 50%;
-            opacity: 0.15;
-            animation: floatParticle 20s infinite;
-        }
-        @keyframes floatParticle {
-            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-        }
-        
-        /* Compact Top Bar */
-        .compact-top-bar {
-            background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.95));
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-            border-bottom: 2px solid #E2E8F0;
-            height: auto;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .mini-select {
-            background: linear-gradient(135deg, #F1F5F9, #E2E8F0);
-            border: 1px solid #CBD5E1;
-            border-radius: 8px;
-            padding: 6px 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #334155;
-            outline: none;
-            transition: all 0.3s;
-            cursor: pointer;
-            min-width: 130px;
-        }
-        .mini-select:hover { background: white; border-color: #1E88E5; box-shadow: 0 2px 8px rgba(30, 136, 229, 0.15); }
-        .mini-select:focus { border-color: #1E88E5; background: white; }
-        
-        /* Hero */
-        .hero-bg {
-            position: relative;
-            min-height: 70vh;
-            background: linear-gradient(135deg, rgba(30, 136, 229, 0.92), rgba(67, 160, 71, 0.88)),
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* التخطيط بالعرض لاستيعاب أكبر قدر من المعلومات */
+        .horizontal-scroll-container {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            overflow: hidden;
+            overflow-x: auto;
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
         }
-        .hero-content { position: relative; z-index: 10; text-align: center; padding: 3rem 2rem; max-width: 900px; }
-        .hero-title {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 4px 30px rgba(0,0,0,0.3);
-            animation: slideUp 1s ease-out;
-            background: linear-gradient(135deg, #FFFFFF, #FFB300);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .horizontal-scroll-container::-webkit-scrollbar {
+            height: 8px;
         }
-        .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.8rem); margin-bottom: 2.5rem; opacity: 0.98; font-weight: 500; animation: slideUp 1s ease-out 0.2s backwards; }
-        
-        /* Stats */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: -50px auto 0;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 20;
+        .horizontal-scroll-container::-webkit-scrollbar-track {
+            background: #E2E8F0;
+            border-radius: 10px;
         }
-        .stat-card {
-            background: linear-gradient(135deg, white, #F8FAFC);
-            border-radius: 20px;
-            padding: 2rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.1);
-            border-bottom: 5px solid #1E88E5;
-            transition: all 0.3s;
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+            background: #1E88E5;
+            border-radius: 10px;
         }
-        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #1E88E5, #43A047);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-        }
-        
-        /* Property Cards */
-        .property-card {
+        .horizontal-card {
+            flex: 0 0 350px;
+            scroll-snap-align: start;
             background: white;
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
         }
-        .property-card:hover { transform: translateY(-10px); box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
-        .property-image { height: 240px; background: #E2E8F0; }
+        .horizontal-card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
         
+        /* الأزرار العائمة */
         .wa-btn {
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 800;
-            display: flex;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 8px;
             transition: all 0.3s;
         }
+        .wa-btn:hover { opacity: 0.9; transform: scale(1.02); }
         
-        /* Floating WhatsApp */
         .whatsapp-float { position: fixed; bottom: 30px; left: 30px; z-index: 999; }
         .whatsapp-float-btn {
             background: linear-gradient(135deg, #25D366, #128C7E);
             color: white;
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.3rem;
+            font-size: 2rem;
             box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
         }
+        .whatsapp-float-btn:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
-    <!-- Animated Background -->
-    <div class="bg-slideshow">
-        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80" alt="bg1">
-        <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?w=1920&q=80" alt="bg2">
-        <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&q=80" alt="bg3">
-    </div>
-
-    <!-- Top Bar & Navigation Filter -->
-    <div class="compact-top-bar py-3">
-        <div class="container mx-auto px-4 flex flex-wrap items-center justify-between gap-3">
-            <div class="flex items-center gap-4 flex-1 flex-wrap">
-                <span class="text-text-dark font-bold text-lg"><i class="fas fa-building text-primary ml-1"></i> آفاق الإنجاز العقاري</span>
-                <select class="mini-select" id="regionFilter">
-                    <option value="all">كل المناطق</option>
-                    <option value="riyadh">الرياض</option>
-                    <option value="kharj">الخرج</option>
-                </select>
-                <select class="mini-select" id="typeFilter">
-                    <option value="all">كل العقارات</option>
-                    <option value="residential">سكني</option>
-                    <option value="agricultural">زراعي</option>
-                    <option value="resort">استراحات</option>
-                </select>
-            </div>
-            <div>
-                <a href="https://wa.me/966555555555" target="_blank" class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-primary-dark transition">تواصل معنا مباشر</a>
+    <div class="sticky top-0 bg-white/95 backdrop-blur shadow-sm border-b border-slate-200 z-50 py-3">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <span class="text-text-dark font-black text-xl flex items-center gap-2">
+                <i class="fas fa-layer-group text-primary"></i> آفاق الإنجاز العقاري
+            </span>
+            <div class="flex items-center gap-3">
+                <a href="#real-estate" class="text-sm font-bold text-text-dark hover:text-primary transition">العقارات</a>
+                <a href="#after-sales" class="text-sm font-bold text-text-dark hover:text-primary transition bg-slate-100 px-3 py-1.5 rounded-lg">خدمات ما بعد البيع</a>
+                <a href="https://wa.me/966545888931?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D9%84%D9%85%D8%AD%20%D9%84%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D9%84%D8%AE%D8%AF%D9%85%D8%A7%D8%AA" target="_blank" class="bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-primary-dark transition">تواصل معنا</a>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <div class="hero-bg">
-        <div class="hero-content">
-            <h1 class="hero-title">مكتب آفاق الإنجاز العقاري</h1>
-            <p class="hero-subtitle">خياراتك العقارية المثالية والاستثمارية الموثوقة في الرياض والخرج وبأعلى معايير الاحترافية</p>
-        </div>
-    </div>
-
-    <!-- Stats Section -->
-    <div class="stats-container">
-        <div class="stat-card">
-            <div class="stat-number">+20</div>
-            <div class="text-text-light font-bold">عام من الخبرة</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">+500</div>
-            <div class="text-text-light font-bold">عقار متاح ومباع</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">+10k</div>
-            <div class="text-text-light font-bold">عميل سعيد ومستثمر</div>
-        </div>
-    </div>
-
-    <!-- Property Listings Section -->
-    <div class="container mx-auto px-4 py-16">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl font-black text-text-dark">أحدث العروض العقارية الحصرية</h2>
-            <p class="text-text-light mt-2">استكشف الأراضي والفرص الاستثمارية والسكنيّة المميزة</p>
+    <section id="real-estate" class="container mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-black text-text-dark">أحدث العروض والفرص العقارية</h1>
+            <p class="text-text-light mt-2">تصفح أقسامنا العقارية المتكاملة الموزعة أفقيًا لتوفير أفضل تجربة تصفح</p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="propertiesGrid">
-            <!-- Card 1 -->
-            <div class="property-card" data-region="kharj" data-type="agricultural">
-                <div class="property-image relative">
-                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" class="w-full h-full object-cover" alt="أرض زراعية">
-                    <span class="absolute top-3 right-3 bg-accent text-white font-bold px-3 py-1 rounded-full text-xs">حصرية</span>
+        <div class="mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-text-dark flex items-center gap-2"><i class="fas fa-map text-primary"></i> قسم الأراضي</h2>
+                <span class="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">اسحب لليمين واليسار ↔️</span>
+            </div>
+            <div class="horizontal-scroll-container">
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 1">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض سكنية / تجارية مميزة (1)</h3>
+                        <p class="text-text-light text-sm mb-4">موقع استراتيجي متكامل الخدمات وقريب من الطرق الرئيسية.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">حسب السعر السائد</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-text-dark mb-2">أرض زراعية مميزة في الخرج</h3>
-                    <p class="text-text-light text-sm mb-4">أرض خصبة متكاملة الخدمات بموقع استراتيجي في منطقة العفجة.</p>
-                    <div class="border-t pt-4 flex justify-between items-center">
-                        <span class="text-secondary font-black text-lg">اتصل لمعرفة السعر</span>
-                        <a href="https://wa.me/966555555555?text=استفسار عن الارض الزراعية بالخرج" target="_blank" class="wa-btn text-xs py-2 px-4"><i class="fab fa-whatsapp"></i> استفسر الآن</a>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 2">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض فضاء واعدة للاستثمار (2)</h3>
+                        <p class="text-text-light text-sm mb-4">أرض منبسطة وممتازة للتطوير أو البيع المستقبلي.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">حسب السعر السائد</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1541604193435-2241999d95c2?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 3">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض سكنية في مخطط مكتمل (3)</h3>
+                        <p class="text-text-light text-sm mb-4">جاهزة للإفراغ والبناء الفوري مع توفر بنية تحتية متميزة.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">سعر منافس</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 4">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض متميزة للبيع (4)</h3>
+                        <p class="text-text-light text-sm mb-4">فرصة نادرة في النطاق العمراني الحيوي.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">تواصل معنا</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 5">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مخطط أراضي واعد (5)</h3>
+                        <p class="text-text-light text-sm mb-4">أراضي منبسطة ومخططة بشكل هندسي ممتاز.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">تواصل معنا</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1541604193435-2241999d95c2?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 6">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض سكنية لقطة (6)</h3>
+                        <p class="text-text-light text-sm mb-4">بجوار كافة المرافق الحيوية وبسعر مغري جداً.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">عرض خاص</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&q=80" class="w-full h-48 object-cover" alt="أرض 7">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">فرصة استثمارية ذهبية (7)</h3>
+                        <p class="text-text-light text-sm mb-4">أرض استثمارية ممتازة بمستقبل عقاري باهر.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">تواصل فوراً</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D9%83%D9%85%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-amber-300 bg-amber-50/20">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80'); filter: hue-rotate(45deg);"></div>
+                        <span class="absolute top-2 right-2 bg-amber-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> ذكاء اصطناعي متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">أرض متحركة بالـ AI <br>منطقة الدلم</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض الدلم الاستثمارية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-sm">السعر: ابتداءً من 550 - 650 ريال</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B1%D8%B6%20%D8%A8%D8%A7%D9%84%D8%AF%D9%84%D9%85%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%205%20%D8%A2%D9%84%D8%A7%D9%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-amber-300 bg-amber-50/20">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1541604193435-2241999d95c2?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-amber-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> ذكاء اصطناعي متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">أرض متحركة بالـ AI <br>منطقة الدلم</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض الدلم الكبرى</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-sm">السعر: 110 - 125 ألف ريال</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B1%D8%B6%20%D8%A8%D8%A7%D9%84%D8%AF%D9%84%D9%85%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%2010%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-amber-300 bg-amber-50/20">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400&q=80'); filter: sepia(1);"></div>
+                        <span class="absolute top-2 right-2 bg-amber-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> ذكاء اصطناعي متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">أرض متحركة بالـ AI <br>منطقة الدلم</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض الدلم المتميزة</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-sm">السعر: ابتداءً من 550 - 650 ريال</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B1%D8%B6%20%D8%A8%D8%A7%D9%84%D8%AF%D9%84%D9%85%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%205%20%D8%A2%D9%84%D8%A7%D1%81%20%D8%AB%D8%A7%D9%86%D9%8A%D8%A9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-sky-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80'); filter: brightness(1.2);"></div>
+                        <span class="absolute top-2 right-2 bg-blue-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> ذكاء اصطناعي متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">أرض متحركة بالـ AI <br>منطقة الضبيعة</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض الضبيعة النموذجية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-sm">السعر: ابتداءً من 550 - 650 ريال</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B1%D8%B6%20%D8%A8%D8%A7%D9%84%D8%B6%D8%A8%D9%8A%D8%B9%D8%A9%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%205%20%D8%A2%D9%84%D8%A7%D9%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-sky-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1541604193435-2241999d95c2?w=400&q=80'); filter: contrast(1.2);"></div>
+                        <span class="absolute top-2 right-2 bg-blue-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> ذكاء اصطناعي متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">أرض متحركة بالـ AI <br>منطقة الضبيعة</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">أرض الضبيعة الاستثمارية الكبرى</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-sm">السعر: 110 - 125 ألف ريال</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A3%D8%B1%D8%B6%20%D8%A8%D8%A7%D9%84%D8%B6%D8%A8%D9%8A%D8%B9%D8%A9%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%2010%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Card 2 -->
-            <div class="property-card" data-region="riyadh" data-type="residential">
-                <div class="property-image relative">
-                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" class="w-full h-full object-cover" alt="أرض سكنية">
-                    <span class="absolute top-3 right-3 bg-primary text-white font-bold px-3 py-1 rounded-full text-xs">فرصة سكنية</span>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-text-dark mb-2">أرض سكنية في شمال الرياض</h3>
-                    <p class="text-text-light text-sm mb-4">أرض ممتازة لبناء فيلا سكنية في مربع مميز وقريب من الخدمات الأساسية.</p>
-                    <div class="border-t pt-4 flex justify-between items-center">
-                        <span class="text-secondary font-black text-lg">سعر تنافسي</span>
-                        <a href="https://wa.me/966555555555?text=استفسار عن الارض السكنية بالرياض" target="_blank" class="wa-btn text-xs py-2 px-4"><i class="fab fa-whatsapp"></i> استفسر الآن</a>
+        <div class="mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-text-dark flex items-center gap-2"><i class="fas fa-seedling text-secondary"></i> قسم المزارع</h2>
+                <span class="text-xs bg-secondary/10 text-secondary px-3 py-1 rounded-full font-bold">اسحب لليمين واليسار ↔️</span>
+            </div>
+            <div class="horizontal-scroll-container">
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&q=80" class="w-full h-48 object-cover" alt="مزرعة صورة 1">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">المزرعة النموذجية الخضراء (زاوية 1)</h3>
+                        <p class="text-text-light text-sm mb-4">مزرعة متكاملة تحتوي على نخيل ومجالس فاخرة وآبار ارتوازية.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">اتصل لمعرفة السعر</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D8%B3%D9%84%20%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%B1%D8%B9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="property-card" data-region="kharj" data-type="resort">
-                <div class="property-image relative">
-                    <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80" class="w-full h-full object-cover" alt="استراحة فاخرة">
-                    <span class="absolute top-3 right-3 bg-secondary text-white font-bold px-3 py-1 rounded-full text-xs">جاهزة</span>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=400&q=80" class="w-full h-48 object-cover" alt="مزرعة صورة 2">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">المزرعة النموذجية الخضراء (زاوية 2)</h3>
+                        <p class="text-text-light text-sm mb-4">لقطة إضافية للمساحات الخضراء المفتوحة وأنظمة الري الذاتي.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">اتصل لمعرفة السعر</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D8%B3%D9%84%20%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%B1%D8%B9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-text-dark mb-2">استراحة فاخرة للمناسبات</h3>
-                    <p class="text-text-light text-sm mb-4">استراحة ممتازة بتصميم عصري مع مسبح خاص ومسطحات خضراء واسعة.</p>
-                    <div class="border-t pt-4 flex justify-between items-center">
-                        <span class="text-secondary font-black text-lg">متاح للإيجار/البيع</span>
-                        <a href="https://wa.me/966555555555?text=استفسار عن الاستراحة بالخرج" target="_blank" class="wa-btn text-xs py-2 px-4"><i class="fab fa-whatsapp"></i> استفسر الآن</a>
+                <div class="horizontal-card">
+                    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&q=80" class="w-full h-48 object-cover" alt="مزرعة صورة 3">
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">المزرعة النموذجية الخضراء (زاوية 3)</h3>
+                        <p class="text-text-light text-sm mb-4">تصميم مميز للمرافق والمستودعات والآبار المتوفرة بها.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">اتصل لمعرفة السعر</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D8%B3%D9%84%20%D8%A7%D9%84%D9%85%D8%B2%D8%A7%D8%B1%D8%B9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الرحمانية الذكية</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في الرحمانية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D8%A7%D9%86%D9%8A%D8%A9%20%D9%85%D9%83%D8%A7%D8%AD%D9%85%2010%20%D8%A2%D9%84%D9%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&q=80'); filter: sepia(0.2);"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الدلم الإنتاجية</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في منطقة الدلم</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%AF%D9%84%D9%85%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%205%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=400&q=80'); filter: saturate(1.5);"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الخرج الكبرى</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في منطقة الخرج</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 15,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%AE%D8%B1%D8%AC%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%2015%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&q=80'); filter: contrast(1.1);"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الرحمانية (2)</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في الرحمانية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D8%A7%D9%86%D9%8A%D8%A9%2010%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=400&q=80'); filter: hue-rotate(90deg);"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الرحمانية الواعدة</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في الرحمانية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B1%D8%AD%D9%85%D8%A7%D9%86%D9%8A%D8%A9%205%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card border-green-300">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=400&q=80'); filter: brightness(0.8);"></div>
+                        <span class="absolute top-2 right-2 bg-green-500 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-robot"></i> AI متحرك</span>
+                        <div class="z-10 text-white font-bold text-center">مزرعة الضبيعة الخصبة</div>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مزرعة في الضبيعة</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">السعر عند التواصل</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D8%B2%D8%B1%D8%B9%D8%A9%20%D8%A7%D9%84%D8%B6%D8%A8%D9%8A%D8%B9%D8%A9%2010%20%D8%A2%D9%84%D1%81" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Services Overview Section -->
-    <div class="bg-gray-100 py-16">
-        <div class="container mx-auto px-4 max-w-4xl text-center">
-            <h2 class="text-3xl font-black text-text-dark mb-6">خدماتنا العقارية المتكاملة</h2>
-            <p class="text-text-light mb-8">نقدم في مكتب آفاق الإنجاز خدمات التسويق العقاري، إدارة الأملاك، البيع والشراء، والتقييم العقاري المعتمد لضمان أعلى عوائد استثمارية لعملائنا.</p>
-            <div class="flex flex-wrap justify-center gap-6">
-                <span class="bg-white px-4 py-2 rounded-full shadow-sm font-bold text-sm text-primary"><i class="fas fa-check-circle ml-1"></i> تسويق احترافي</span>
-                <span class="bg-white px-4 py-2 rounded-full shadow-sm font-bold text-sm text-primary"><i class="fas fa-check-circle ml-1"></i> إدارة أملاك</span>
-                <span class="bg-white px-4 py-2 rounded-full shadow-sm font-bold text-sm text-primary"><i class="fas fa-check-circle ml-1"></i> استشارات استثمارية</span>
+        <div class="mb-12">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-text-dark flex items-center gap-2"><i class="fas fa-umbrella-beach text-accent"></i> قسم الاستراحات الفاخرة</h2>
+                <span class="text-xs bg-accent/10 text-accent px-3 py-1 rounded-full font-bold">اسحب لليمين واليسار ↔️</span>
+            </div>
+            <div class="horizontal-scroll-container">
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">استراحة الياقوت الفخمة</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع - مسبح، مسطحات خضراء</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">550 - 650 ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%205%20%D8%A2%D9%84%D1%81%20%D8%B3%D8%B9%D8%B1%20550-650" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">منتجع الأرجوان للمناسبات</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع - قسمين متكاملين</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">110 - 130 ألف ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D9%85%D8%B3%D8%A7%D8%AD%D8%A9%2010%20%D2%A2%D9%84%D9%81%20%D8%B3%D8%B9%D8%B1%20110-130" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">شاليه الريم الحديث</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع - ألعاب مائية وعريش شعبي</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">550 - 650 ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D8%A7%D9%84%D8%B1%D9%8A%D9%85" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">استراحة النخيل VIP</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع - مجالس بيت شعر ومسطحات</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">110 - 130 ألف ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D8%A7%D9%84%D9%86%D8%AE%D9%84" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">شاليه لافندر الهادئ</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع - إطلالة ريفية خلابة</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">550 - 650 ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%B4%D8%A7%D9%84%D9%8A%D9%87%20%D9%84%D8%A7%D9%81%D9%86%D8%AF%D8%B1" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">منتجع المها الملكي</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع - مناسب للحفلات الكبيرة</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">110 - 130 ألف ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D9%86%D8%AA%D8%AC%D8%B9%20%D8%A7%D9%84%D9%85%D9%87%D8%A7" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">استراحة النرجس العائلية</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 5,000 متر مربع - خصوصية تامة ومسطح أخضر</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">550 - 650 ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%A7%D8%B3%D8%AA%D8%B1%D8%A7%D8%AD%D8%A9%20%D8%A7%D9%84%D9%86%D8%B1%D8%AC%D8%B3" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="horizontal-card border-amber-400">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-80 animate-pulse" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80');"></div>
+                        <span class="absolute top-2 right-2 bg-accent text-white font-bold px-2 py-0.5 rounded text-xs">AI متحرك جذاب</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">منتجع الياسمين الفاخر</h3>
+                        <p class="text-text-light text-sm mb-2">المساحة: 10,000 متر مربع - ملاعب رياضية ومجالس ملكية</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-primary font-black text-xs">110 - 130 ألف ريال سعودي</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%85%D9%86%D8%AA%D8%AC%D8%B9%20%D8%A7%D9%84%D9%8A%D8%A7%D9%83%D9%85%D9%8A%D9%86" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-white text-center py-8">
+        <div class="mb-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-text-dark flex items-center gap-2"><i class="fas fa-home text-blue-600"></i> قسم الأراضي السكنية</h2>
+                <span class="text-xs bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-bold">اسحب لليمين واليسار ↔️</span>
+            </div>
+            <div class="horizontal-scroll-container">
+                <div class="horizontal-card">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-bounce" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80'); animation-duration: 8s;"></div>
+                        <span class="absolute top-2 right-2 bg-blue-600 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-magic"></i> عرض AI ذكي</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مخطط السكني الرقمي الأول</h3>
+                        <p class="text-text-light text-sm mb-4">قطع سكنية ممتازة لبناء الفلل بمساحات نموذجية في أرقى الأحياء الواعدة.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">أسعار تنافسية</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D8%B3%D9%84%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A%20%D8%A7%D9%84%D8%B3%D9%83%D9%86%D9%8A%D8%A9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="horizontal-card">
+                    <div class="relative h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center opacity-70 animate-bounce" style="background-image: url('https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=400&q=80'); animation-duration: 12s;"></div>
+                        <span class="absolute top-2 right-2 bg-blue-600 text-white font-black px-2 py-0.5 rounded text-xs"><i class="fas fa-magic"></i> عرض AI ذكي</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-lg mb-1">مخطط السكني الرقمي الثاني</h3>
+                        <p class="text-text-light text-sm mb-4">أراضي سكنية زوايا وعلى شوارع فسيحة وجاهزة تمامًا للإفراغ الفوري.</p>
+                        <div class="flex justify-between items-center border-t pt-3">
+                            <span class="text-secondary font-bold text-sm">تسهيلات متميزة</span>
+                            <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%82%D8%B3%D9%84%20%D8%A7%D9%84%D8%A3%D8%B1%D8%A7%D8%B6%D9%8A%20%D8%A7%D9%84%D8%B3%D9%83%D9%86%D9%8A%D8%A9" target="_blank" class="wa-btn text-xs"><i class="fab fa-whatsapp"></i> استفسر</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="after-sales" class="bg-slate-900 text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-accent text-sm font-bold uppercase tracking-wider bg-accent/10 px-3 py-1 rounded-full">تطوير وعناية مستمرة</span>
+                <h2 class="text-3xl font-black mt-3">قسم خدمات ما بعد البيع</h2>
+                <p class="text-slate-400 mt-2">نرافقك في رحلتك العقارية من البداية وحتى الاستقرار عبر باقة خدماتنا الشاملة المعروضة أفقيًا</p>
+            </div>
+
+            <div class="horizontal-scroll-container">
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-file-invoice"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">استخراج رخص البناء</h3>
+                        <p class="text-slate-400 text-sm mb-6">نمتلك فريق مخصص لتخليص وإنهاء كافه إجراءات استخراج رخص البناء من الجهات والبلديات المختصة بأسرع وقت.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D8%B3%D8%AA%D8%AE%D8%B1%D8%A7%D8%AC%20%D8%B1%D8%AE%D8%B5%20%D8%A7%D9%84%D8%A8%D9%86%D8%A7%D8%A1" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-secondary/10 text-secondary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">المقاولات العامة</h3>
+                        <p class="text-slate-400 text-sm mb-6">تنفيذ المقاولات والإنشاءات تحت إشراف هندسي متكامل ومطابق لأعلى كود بناء معتمد في المملكة.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D9%85%D9%82%D8%A7%D9%88%D9%84%D8%A7%D8%AA" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-paint-roller"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">التشطيب والترميم</h3>
+                        <p class="text-slate-400 text-sm mb-6">تشطيبات عصرية، ديكورات داخلية وخارجية بلمسات راقية تلبي تطلعاتك وبأجود المواد والخامات المضمونة.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A7%D9%84%D8%AA%D8%B4%D8%B7%D9%8A%D8%A8" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-purple-500/10 text-purple-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">إدارة الأملاك</h3>
+                        <p class="text-slate-400 text-sm mb-6">متابعة المستأجرين، تحصيل الإيجارات، الصيانة الدورية للعقارات، وتحقيق أعلى عوائد ربحية لاستثمارك المالي.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%A5%D8%AF%D8%A7%D8%B1%D9%8A%20%D8%A7%D9%84%D8%A3%D9%85%D9%84%D8%A7%D9%83" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-teal-500/10 text-teal-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">تعيين الآبار</h3>
+                        <p class="text-slate-400 text-sm mb-6">تحديد وفحص أفضل المواقع الجغرافية الملائمة لإنشاء وتعيين الآبار وضمان وفرة المياه الجوفية النقية.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%AA%D8%B9%D9%8A%D9%8A%D9%86%20%D8%A7%D9%84%D8%A2%D8%A8%D8%A7%D8%B1" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+
+                <div class="horizontal-card bg-slate-800 border-slate-700 text-white">
+                    <div class="p-6 text-center">
+                        <div class="w-16 h-16 bg-blue-500/10 text-blue-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">حفر الآبار</h3>
+                        <p class="text-slate-400 text-sm mb-6">أحدث معدات وأجهزة الحفر الارتوازي والسطحي للمزارع والاستراحات مع التمديد والتركيب الشامل والآمن.</p>
+                        <a href="https://wa.me/966545888931?text=%D8%A3%D9%88%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D8%AE%D8%AF%D9%85%D8%A9%20%D8%AD%D9%81%D8%B1%20%D8%A7%D9%84%D8%A2%D8%A8%D8%A7%D8%B1" target="_blank" class="wa-btn w-full text-sm justify-center"><i class="fab fa-whatsapp"></i> اطلب الخدمة الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 text-white text-center py-8 border-t border-slate-800">
         <p class="font-bold text-lg text-accent">مكتب آفاق الإنجاز العقاري</p>
-        <p class="text-slate-400 text-sm mt-2">جميع الحقوق محفوظة ©️ 2026</p>
+        <p class="text-slate-500 text-sm mt-2">جميع الحقوق محفوظة ©️ 2026</p>
     </footer>
 
-    <!-- Floating WhatsApp Button -->
     <div class="whatsapp-float">
-        <a href="https://wa.me/966555555555" target="_blank" class="whatsapp-float-btn">
+        <a href="https://wa.me/966545888931?text=%D9%85%D8%B1%D8%AD%D8%A8%D9%8B%D8%A7%20%D8%A2%D9%81%D8%A7%D9%82%20%D8%A7%D9%84%D8%A5%D9%86%D8%AC%D8%A7%D8%B2%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%D8%8C%20%D8%A3%D8%B1%D9%81%D8%A8%20%D8%A8%D8%A7%D9%84%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1" target="_blank" class="whatsapp-float-btn">
             <i class="fab fa-whatsapp"></i>
         </a>
     </div>
-
-    <!-- Dynamic Script for Filtering Elements -->
-    <script>
-        const regionFilter = document.getElementById('regionFilter');
-        const typeFilter = document.getElementById('typeFilter');
-        const cards = document.querySelectorAll('.property-card');
-
-        function filterProperties() {
-            const regionValue = regionFilter.value;
-            const typeValue = typeFilter.value;
-
-            cards.forEach(card => {
-                const cardRegion = card.getAttribute('data-region');
-                const cardType = card.getAttribute('data-type');
-
-                const matchesRegion = (regionValue === 'all' || cardRegion === regionValue);
-                const matchesType = (typeValue === 'all' || cardType === typeValue);
-
-                if (matchesRegion && matchesType) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        regionFilter.addEventListener('change', filterProperties);
-        typeFilter.addEventListener('change', filterProperties);
-    </script>
 
 </body>
 </html>
