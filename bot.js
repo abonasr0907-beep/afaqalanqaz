@@ -12,14 +12,13 @@ http.createServer((req, res) => {
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 
-// المفاتيح المعتمدة (التوكن الجديد ومعرف الأدمن)
+// المفاتيح المعتمدة
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7...';
 const ADMIN_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '8298395488';
 
-// إنشاء كائن البوت مع تفعيل الـ Polling للاستماع للرسائل
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
-// قائمة لوحة التحكم الخاصة بالأدمن (المحتوى والعقارات والخدمات)
+// قائمة لوحة التحكم
 const adminControlPanel = {
   reply_markup: {
     inline_keyboard: [
@@ -42,8 +41,8 @@ const adminControlPanel = {
   }
 };
 
-// 1. استقبال أمر start/ أو admin/
-bot.onText(/\/(start|admin)/, (msg) => {
+// الاستجابة لأي نص أو رسالة يتم إرسالها دون أي شروط
+bot.on('message', (msg) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel);
 });
