@@ -1,20 +1,20 @@
 const http = require('http');
 
-// خادم ويب بسيط لإبقاء الخدمة نشطة على Render
+// إنشاء خادم HTTP بسيط لاستجابة فحص المنافذ الخاص بـ Render
 const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot is running');
-}).listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  res.end('Bot is active and running');
+}).listen(PORT, '0.0.0.0', () => {
+  console.log(`Server listening on port ${PORT}`);
 });
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// المفاتيح المعتمدة
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7...';
+// التوكن الجديد المحدث والمستخرج من BotFather
+const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1xE5Yh7LzIuU';
 
-// إنشاء كائن البوت مع خيارات تحسين الاتصال
+// إعداد البوت مع الاستماع المستمر (Polling)
 const bot = new TelegramBot(BOT_TOKEN, {
   polling: {
     interval: 300,
@@ -25,7 +25,7 @@ const bot = new TelegramBot(BOT_TOKEN, {
   }
 });
 
-// قائمة لوحة التحكم
+// إعدادات لوحة التحكم
 const adminControlPanel = {
   reply_markup: {
     inline_keyboard: [
@@ -48,7 +48,7 @@ const adminControlPanel = {
   }
 };
 
-// الاستجابة لأي رسالة (بما فيها /start وأي نص آخر)
+// الاستجابة الفورية لأي رسالة أو أمر (بما فيها /start وأي كلمة أخرى)
 bot.on('message', (msg) => {
   if (msg.chat && msg.chat.id) {
     bot.sendMessage(msg.chat.id, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel)
@@ -56,7 +56,7 @@ bot.on('message', (msg) => {
   }
 });
 
-// معالجة الأخطاء لتفادي توقف البوت
+// معالجة وإظهار أخطاء الاتصال بدقة
 bot.on('polling_error', (error) => {
   console.log('Polling error:', error.code, error.message);
 });
