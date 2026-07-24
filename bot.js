@@ -1,6 +1,5 @@
 const http = require('http');
 
-// 1. إنشاء خادم HTTP لتخطي فحص المنافذ في Render
 const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -11,7 +10,6 @@ http.createServer((req, res) => {
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// 2. التوكن المباشر للبوت
 const BOT_TOKEN = '8968555626:AAFPVptuaQ_o6j-eJSEfsm-A7kQBWG22mtc';
 
 const bot = new TelegramBot(BOT_TOKEN, {
@@ -24,10 +22,8 @@ const bot = new TelegramBot(BOT_TOKEN, {
   }
 });
 
-// تخزين مؤقت لحالة المحادثة الخاصة بكل مستخدم
 const userStates = {};
 
-// أزرار لوحة التحكم الإدارية الرئيسية
 const adminControlPanel = {
   reply_markup: {
     inline_keyboard: [
@@ -43,7 +39,6 @@ const adminControlPanel = {
   }
 };
 
-// أزرار اختيار أقسام العقارات
 const categoriesKeyboard = {
   reply_markup: {
     inline_keyboard: [
@@ -59,7 +54,17 @@ const categoriesKeyboard = {
   }
 };
 
-// 3. الاستماع للرسائل والأوامر
+const skipDetailsKeyboard = {
+  reply_markup: {
+    inline_keyboard: [
+      [
+        { text: '⏭️ تخطي التفاصيل وأرسل الوسائط مباشرة', callback_data: 'skip_details' },
+        { text: '❌ إلغاء', callback_data: 'cancel' }
+      ]
+    ]
+  }
+};
+
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
@@ -70,14 +75,13 @@ bot.on('message', (msg) => {
     return;
   }
 
-  // معالجة الخطوات التفاعلية حسب حالة المستخدم
   const state = userStates[chatId];
   if (!state || state.step === 'idle') return;
 
   if (state.step === 'waiting_for_details') {
     state.details = text;
-    state.step = 'waiting_for_image';
-    bot.sendMessage(chatId, 'ممتاز. الآن أرسل **صورة العقار** (أو صور متعددة):');
+    state.step = 'waiting_for_media';
+    bot.sendMessage(chatId, 'ممتاز. الآن أرسل صورة أو فيديو للعقار:');
   } else if (state.step === 'waiting_for_article') {
     bot.sendMessage(chatId, `✅ تم استلام المقال / الإعلان بنجاح:\n\n${text}\n\nتم حفظه وتجهيزه للنشر.`);
     userStates[chatId] = { step: 'idle' };
@@ -85,29 +89,49 @@ bot.on('message', (msg) => {
   }
 });
 
-// 4. الاستماع للصور المرسلة من المستخدم
+// استقبال الصور
 bot.on('photo', (msg) => {
   const chatId = msg.chat.id;
   const state = userStates[chatId];
 
-  if (state && state.step === 'waiting_for_image') {
-    const photo = msg.photo[msg.photo.length - 1]; // أخذ أعلى جودة للصورة
-    state.photoId = photo.file_id;
+  if (state && (state.step === 'waiting_for_media' || state.step === 'waiting_for_media_optional')) {
+    const photo = msg.photo[msg.photo.length - 1];
+    state.mediaId = photo.file_id;
+    state.mediaType = 'صورة';
 
-    bot.sendMessage(
-      chatId,
-      `🎉 تم استلام العقار بنجاح!\n\n` +
-      `📌 القسم: ${state.categoryName}\n` +
-      `📝 التفاصيل: ${state.details}\n` +
-      `🖼️ الحالة: جاهز للربط والعرض بالموقع.`
-    );
-
-    userStates[chatId] = { step: 'idle' };
-    bot.sendMessage(chatId, 'اختر عملية أخرى:', adminControlPanel);
+    finishPropertyUpload(chatId, state);
   }
 });
 
-// 5. التعامل مع الضغط على الأزرار التفاعلية (Callback Queries)
+// استقبال الفيديوهات
+bot.on('video', (msg) => {
+  const chatId = msg.chat.id;
+  const state = userStates[chatId];
+
+  if (state && (state.step === 'waiting_for_media' || state.step === 'waiting_for_media_optional')) {
+    const video = msg.video;
+    state.mediaId = video.file_id;
+    state.mediaType = 'فيديو';
+
+    finishPropertyUpload(chatId, state);
+  }
+});
+
+function finishPropertyUpload(chatId, state) {
+  const detailsText = state.details ? state.details : 'بدون تفاصيل إضافية';
+  
+  bot.sendMessage(
+    chatId,
+    `🎉 تم استلام العقار والوسائط (${state.mediaType}) بنجاح!\n\n` +
+    `📌 القسم: ${state.categoryName}\n` +
+    `📝 التفاصيل: ${detailsText}\n` +
+    `🖼️ الحالة: جاهز للربط وعرضه في الموقع.`
+  );
+
+  userStates[chatId] = { step: 'idle' };
+  bot.sendMessage(chatId, 'اختر عملية أخرى:', adminControlPanel);
+}
+
 bot.on('callback_query', (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
@@ -126,7 +150,18 @@ bot.on('callback_query', (query) => {
       category: data, 
       categoryName: catMap[data] 
     };
-    bot.sendMessage(chatId, `لقد اخترت قسم (${catMap[data]}).\nالآن أرسل تفاصيل العقار (الموقع، المساحة، السعر):`);
+    bot.sendMessage(
+      chatId, 
+      `لقد اخترت قسم (${catMap[data]}).\nالآن أرسل تفاصيل العقار (الموقع، المساحة، السعر)، أو يمكنك التخطي والانتقال لرفع الوسائط مباشرة:`, 
+      skipDetailsKeyboard
+    );
+  } else if (data === 'skip_details') {
+    const state = userStates[chatId];
+    if (state && state.step === 'waiting_for_details') {
+      state.details = null;
+      state.step = 'waiting_for_media_optional';
+      bot.sendMessage(chatId, 'تم تخطي التفاصيل. الآن أرسل صورة أو فيديو للعقار:');
+    }
   } else if (data === 'add_article') {
     userStates[chatId] = { step: 'waiting_for_article' };
     bot.sendMessage(chatId, 'أرسل نص المقال أو الإعلان الجديد الذي تريد نشره:');
@@ -140,7 +175,6 @@ bot.on('callback_query', (query) => {
   bot.answerCallbackQuery(query.id);
 });
 
-// 6. التعامل مع أخطاء الاتصال
 bot.on('polling_error', (error) => {
   console.log(`[Polling Error] ${error.code}: ${error.message}`);
 });
