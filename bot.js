@@ -1,20 +1,21 @@
 const http = require('http');
 
-// إنشاء خادم HTTP بسيط لاستجابة فحص المنافذ الخاص بـ Render
+// 1. إنشاء خادم HTTP لتخطي فحص المنافذ في Render
 const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot is active and running');
+  res.end('Bot is running smoothly!');
 }).listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// التوكن الجديد المحدث والمستخرج من BotFather
-const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1xE5Yh7LzIuU';
+// 2. التوكن تم تنظيفه تماماً ودون أي مسافات خفية
+const RAW_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1xE5Yh7LzIuU';
+const BOT_TOKEN = RAW_TOKEN.trim();
 
-// إعداد البوت مع الاستماع المستمر (Polling)
+// 3. تهيئة البوت
 const bot = new TelegramBot(BOT_TOKEN, {
   polling: {
     interval: 300,
@@ -25,7 +26,7 @@ const bot = new TelegramBot(BOT_TOKEN, {
   }
 });
 
-// إعدادات لوحة التحكم
+// 4. أزرار لوحة التحكم الإدارية
 const adminControlPanel = {
   reply_markup: {
     inline_keyboard: [
@@ -48,15 +49,15 @@ const adminControlPanel = {
   }
 };
 
-// الاستجابة الفورية لأي رسالة أو أمر (بما فيها /start وأي كلمة أخرى)
+// 5. الاستجابة لأي رسالة يتم إرسالها للبوت
 bot.on('message', (msg) => {
   if (msg.chat && msg.chat.id) {
     bot.sendMessage(msg.chat.id, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel)
-      .catch((err) => console.error('Error sending message:', err));
+      .catch((err) => console.error('Error sending message:', err.message));
   }
 });
 
-// معالجة وإظهار أخطاء الاتصال بدقة
+// 6. التعامل مع أخطاء الاتصال بطريقة نظيفة
 bot.on('polling_error', (error) => {
-  console.log('Polling error:', error.code, error.message);
+  console.log(`[Polling Error] ${error.code}: ${error.message}`);
 });
