@@ -100,13 +100,14 @@
             pointer-events: auto;
         }
         
+        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #F8FAFC; }
         ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #00A651; }
     </style>
 </head>
-<body class="antialiased pb-12">
+<body class="antialiased relative">
 
     <!-- 1. الهيدر العلوي -->
     <header class="glass-header sticky top-0 z-40 py-3">
@@ -119,7 +120,7 @@
                     <h1 class="text-xl font-black text-darkNavy leading-tight">آفاق الإنجاز العقاري</h1>
                     <span class="verified-badge">
                         <i class="fas fa-check-circle"></i>
-                        موثق من الهيئة العامة للعقار | رخصة فال
+                        موثق من الهيئة العامة للعقار | رخصة فال | رخصة مزاولة مهنة
                     </span>
                 </div>
             </div>
@@ -128,14 +129,15 @@
                 <a href="#home" class="hover:text-primary transition">الرئيسية</a>
                 <a href="#listings" class="hover:text-primary transition">العقارات</a>
                 <a href="#list-your-property" class="hover:text-primary transition">اعرض عقارك</a>
-                <a href="#services" class="hover:text-primary transition">الخدمات</a>
+                <a href="#services" class="hover:text-primary transition">خدمات ما بعد البيع</a>
+                <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="hover:text-primary transition"><i class="fas fa-map-marker-alt text-primary ml-1"></i> الخريطة</a>
             </nav>
 
             <div class="flex items-center gap-3">
                 <a href="https://t.me/afaqalanqaz" target="_blank" class="hidden sm:flex items-center gap-2 bg-sky-500 text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-sky-600 transition shadow-md">
                     <i class="fab fa-telegram-plane text-lg"></i> تليجرام
                 </a>
-                <a href="https://wa.me/966545888931" target="_blank" class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primaryDark transition shadow-lg shadow-emerald-200">
+                <a href="https://wa.me/966545888931?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20العروض%20العقارية" target="_blank" class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primaryDark transition shadow-lg shadow-emerald-200">
                     <i class="fab fa-whatsapp text-lg"></i> تواصل مباشر
                 </a>
             </div>
@@ -171,6 +173,7 @@
                             <option value="الهياثم">الهياثم</option>
                             <option value="الرحمانية">مخطط الرحمانية</option>
                             <option value="الدلم">الدلم</option>
+                            <option value="العرجاء">العرجاء</option>
                             <option value="الخرج">الخرج</option>
                             <option value="الرياض">الرياض</option>
                         </select>
@@ -182,7 +185,8 @@
                             <option value="all">نطاق السعر</option>
                             <option value="0-600000">حتى 600,000 ريال</option>
                             <option value="600000-1000000">600,000 - 1,000,000 ريال</option>
-                            <option value="1000000+">أكثر من 1,000,000 ريال</option>
+                            <option value="1000000-1500000">1,000,000 - 1,500,000 ريال</option>
+                            <option value="1500000+">أكثر من 1,500,000 ريال</option>
                         </select>
                     </div>
 
@@ -205,33 +209,130 @@
                 <h3 class="text-2xl md:text-3xl font-black text-darkNavy" id="sectionTitle">أحدث الأراضي الزراعية المتاحة</h3>
                 <p class="text-slate-500 mt-1">عقارات مختارة بعناية، مضمونة الصك، وجاهزة للإفراغ</p>
             </div>
-            <span class="bg-emerald-50 text-primary px-4 py-2 rounded-full text-sm font-bold border border-emerald-100" id="resultsCount">0 عرض</span>
+            <span class="bg-emerald-50 text-primary px-4 py-2 rounded-full text-sm font-bold border border-emerald-100" id="resultsCount">العروض المتاحة: 3</span>
         </div>
 
         <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- الكروت تظهر هنا عبر JS -->
+            <!-- عرض 1 -->
+            <div class="property-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-bayut">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80" alt="أرض زراعية" class="w-full h-full object-cover">
+                    <span class="absolute top-3 right-3 bg-darkNavy/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">مخطط الرحمانية</span>
+                </div>
+                <div class="p-5">
+                    <h4 class="font-bold text-lg text-darkNavy mb-2">أرض زراعية مميزة بالرحمانية</h4>
+                    <div class="text-primary font-black text-xl mb-3">450,000 <span class="text-xs text-slate-500">ريال</span></div>
+                    <div class="flex items-center gap-4 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                        <span><i class="fas fa-ruler-combined ml-1 text-primary"></i> 10,000 م²</span>
+                        <span><i class="fas fa-certificate ml-1 text-primary"></i> صك إلكتروني</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="requestPropertyDirect('أرض الرحمانية (450,000 ريال)')" class="bg-primary hover:bg-primaryDark text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fab fa-whatsapp"></i> استفسر الآن
+                        </button>
+                        <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-darkNavy font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fas fa-map-marked-alt text-primary"></i> الخريطة
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- عرض 2 -->
+            <div class="property-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-bayut">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="استراحة" class="w-full h-full object-cover">
+                    <span class="absolute top-3 right-3 bg-darkNavy/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">الهياثم</span>
+                </div>
+                <div class="p-5">
+                    <h4 class="font-bold text-lg text-darkNavy mb-2">استراحة فاخرة جاهزة</h4>
+                    <div class="text-primary font-black text-xl mb-3">780,000 <span class="text-xs text-slate-500">ريال</span></div>
+                    <div class="flex items-center gap-4 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                        <span><i class="fas fa-ruler-combined ml-1 text-primary"></i> 2,500 م²</span>
+                        <span><i class="fas fa-water ml-1 text-primary"></i> بئر متوفر</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="requestPropertyDirect('استراحة الهياثم (780,000 ريال)')" class="bg-primary hover:bg-primaryDark text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fab fa-whatsapp"></i> استفسر الآن
+                        </button>
+                        <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-darkNavy font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fas fa-map-marked-alt text-primary"></i> الخريطة
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- عرض 3 -->
+            <div class="property-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-bayut">
+                <div class="relative h-48 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&q=80" alt="أرض سكنية" class="w-full h-full object-cover">
+                    <span class="absolute top-3 right-3 bg-darkNavy/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">الخرج - العرجاء</span>
+                </div>
+                <div class="p-5">
+                    <h4 class="font-bold text-lg text-darkNavy mb-2">أرض سكنية تجارية</h4>
+                    <div class="text-primary font-black text-xl mb-3">320,000 <span class="text-xs text-slate-500">ريال</span></div>
+                    <div class="flex items-center gap-4 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
+                        <span><i class="fas fa-ruler-combined ml-1 text-primary"></i> 600 م²</span>
+                        <span><i class="fas fa-road ml-1 text-primary"></i> شارع 30م</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="requestPropertyDirect('أرض العرجاء (320,000 ريال)')" class="bg-primary hover:bg-primaryDark text-white font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fab fa-whatsapp"></i> استفسر الآن
+                        </button>
+                        <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="bg-slate-100 hover:bg-slate-200 text-darkNavy font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-1.5 text-xs">
+                            <i class="fas fa-map-marked-alt text-primary"></i> الخريطة
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم التعليقات -->
+        <div class="mt-16 bg-white rounded-2xl p-6 md:p-8 shadow-bayut border border-slate-100">
+            <h4 class="text-xl font-bold text-darkNavy mb-4 flex items-center gap-2">
+                <i class="fas fa-comments text-primary"></i> آراء واستفسارات الزوار
+            </h4>
+            <div id="commentsList" class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="font-bold text-sm text-darkNavy">أبو محمد</span>
+                        <span class="text-xs text-slate-400">منذ يومين</span>
+                    </div>
+                    <p class="text-sm text-slate-600">عروض ممتازة وأسعار منافسة جداً في مخطط الرحمانية، بارك الله فيكم.</p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <input type="text" id="commentInput" placeholder="اكتب رأيك أو استفسارك هنا..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                <button onclick="submitComment()" class="bg-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-primaryDark transition">
+                    <i class="fas fa-paper-plane"></i> إرسال
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- 4. قسم اعرض عقارك معنا -->
     <section id="list-your-property" class="bg-darkNavy py-16 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center mb-10">
                 <h3 class="text-3xl font-black text-white mb-3">هل تملك مزرعة أو أرضاً وتريد عرضها لدينا؟</h3>
-                <p class="text-slate-300">نقدم لك تقييماً مجانياً وسريعاً لعقارك، مع تسويق احترافي يضمن لك أفضل سعر.</p>
+                <p class="text-slate-300 mb-4">نقدم لك تقييماً مجانياً وسريعاً لعقارك، مع تسويق احترافي يضمن لك أفضل سعر في أسرع وقت.</p>
+                <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="inline-flex items-center gap-2 bg-white/10 text-white hover:bg-white/20 px-4 py-2 rounded-xl text-sm border border-white/20 transition">
+                    <i class="fas fa-map-marker-alt text-primary"></i> موقع المكتب على الخريطة
+                </a>
             </div>
             <div class="max-w-2xl mx-auto bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/20">
                 <form onsubmit="submitPropertyListing(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <input type="text" placeholder="الاسم الكريم" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
-                    <input type="tel" placeholder="رقم الجوال" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
-                    <select class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <input type="text" id="propOwnerName" placeholder="الاسم الكريم" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <input type="tel" id="propOwnerPhone" placeholder="رقم الجوال" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <select id="propType" class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
                         <option value="أرض زراعية">أرض زراعية</option>
                         <option value="أرض سكنية">أرض سكنية</option>
+                        <option value="مزرعة قائمة">مزرعة قائمة</option>
                         <option value="استراحة">استراحة / شاليه</option>
                     </select>
-                    <input type="text" placeholder="موقع العقار" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
-                    <textarea placeholder="تفاصيل إضافية (المساحة، السعر المتوقع)" rows="2" class="md:col-span-2 bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary"></textarea>
-                    <button type="submit" class="md:col-span-2 bg-primary text-white font-black py-4 rounded-xl hover:bg-primaryDark transition flex items-center justify-center gap-2 text-lg shadow-lg">
+                    <input type="text" id="propLocation" placeholder="موقع العقار (الحي / المخطط)" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <textarea id="propDetails" placeholder="تفاصيل إضافية (المساحة، السعر المتوقع، المميزات)" rows="2" class="md:col-span-2 bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary"></textarea>
+                    <button type="submit" class="md:col-span-2 bg-primary text-white font-black py-4 rounded-xl hover:bg-primaryDark transition flex items-center justify-center gap-2 text-lg shadow-lg shadow-emerald-900/50">
                         <i class="fas fa-paper-plane"></i> إرسال طلب التقييم والعرض
                     </button>
                 </form>
@@ -247,259 +348,211 @@
                 <h3 class="text-3xl font-black text-darkNavy mt-2">خدمات ما بعد البيع وإدارة الأملاك</h3>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition">
-                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
                         <i class="fas fa-file-signature"></i>
                     </div>
                     <h4 class="text-lg font-bold text-darkNavy mb-2">استخراج رخص البناء</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed">متابعة وتخليص إجلاء وتصاريح البناء الرسمية بكفاءة.</p>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">متابعة وتخليص إجلاء وتصاريح البناء الرسمية بكفاءة.</p>
+                    <button onclick="requestService('استخراج رخص البناء')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
                 </div>
-                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition">
-                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
                         <i class="fas fa-hard-hat"></i>
                     </div>
                     <h4 class="text-lg font-bold text-darkNavy mb-2">المقاولات والتشطيب</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed">بناء وتأهيل معماري متكامل، استلام عظم أو مفتاح.</p>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">بناء وتأهيل معماري متكامل، استلام عظم أو مفتاح.</p>
+                    <button onclick="requestService('المقاولات والتشطيب')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
                 </div>
-                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition">
-                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
                         <i class="fas fa-water"></i>
                     </div>
                     <h4 class="text-lg font-bold text-darkNavy mb-2">حفر وتحديد الآبار</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed">كشف وتحديد التجمعات المائية الجوفية وحفر الآبار.</p>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">كشف وتحديد التجمعات المائية الجوفية وحفر الآبار.</p>
+                    <button onclick="requestService('حفر وتحديد الآبار')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
                 </div>
-                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition">
-                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
                         <i class="fas fa-building-user"></i>
                     </div>
                     <h4 class="text-lg font-bold text-darkNavy mb-2">إدارة الأملاك</h4>
-                    <p class="text-sm text-slate-500 leading-relaxed">تحصيل الإيجارات، صيانة المجمعات، وإدارة المزارع.</p>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">تحصيل الإيجارات، صيانة المجمعات، وإدارة المزارع.</p>
+                    <button onclick="requestService('إدارة الأملاك')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- المساعد الذكي (AI Chatbot) -->
-    <div id="aiChatWindow" class="ai-chat-window hidden-chat fixed bottom-24 left-6 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-100 overflow-hidden">
-        <div class="bg-darkNavy text-white p-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center">
-                    <i class="fas fa-robot text-sm"></i>
-                </div>
+    <!-- الفوتر -->
+    <footer class="bg-darkNavy text-white pt-12 pb-6 border-t border-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-wrap justify-between items-center gap-6 pb-8 border-b border-slate-800">
                 <div>
-                    <h5 class="font-bold text-sm">مساعد آفاق العقاري</h5>
-                    <span class="text-xs text-emerald-400 flex items-center gap-1">
-                        <span class="w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span> متصل الآن
-                    </span>
+                    <h4 class="text-xl font-black text-white">آفاق الإنجاز العقاري</h4>
+                    <p class="text-xs text-slate-400 mt-1">المملكة العربية السعودية - الرياض / الخرج / الهياثم</p>
                 </div>
+                <a href="https://maps.google.com/?q=24.190281,47.155922" target="_blank" class="flex items-center gap-2 bg-primary hover:bg-primaryDark text-white px-6 py-3 rounded-xl font-bold text-sm transition shadow-lg">
+                    <i class="fas fa-map-marked-alt text-lg"></i> فتح الموقع في خرائط Google
+                </a>
             </div>
-            <button onclick="toggleChat()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
-        </div>
-        
-        <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 bg-slate-50 text-xs">
-            <div class="bg-white p-3 rounded-xl border border-slate-100 text-slate-700 shadow-sm max-w-[85%]">
-                أهلاً بك 👋 كيف يمكنني مساعدتك اليوم في البحث عن أرضك أو استراحتك بالرياض والخرج؟
+            <div class="text-center text-xs text-slate-500 pt-6">
+                جميع الحقوق محفوظة © آفاق الإنجاز العقاري 2026
             </div>
         </div>
+    </footer>
 
+    <!-- 🤖 نافذة المساعد الذكي العائمة -->
+    <div id="aiChatWindow" class="ai-chat-window hidden-chat fixed bottom-24 left-6 z-50 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+        <div class="bg-darkNavy text-white p-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-3 h-3 bg-emerald-400 rounded-full animate-ping"></div>
+                <span class="font-bold text-sm">المساعد العقاري الذكي</span>
+            </div>
+            <button onclick="toggleAIChat()" class="text-slate-400 hover:text-white"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="aiMessages" class="p-4 h-64 overflow-y-auto text-sm space-y-3 bg-slate-50">
+            <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-slate-700">
+                أهلاً بك! أنا المساعد الذكي لمكتب آفاق الإنجاز. كيف يمكنني مساعدتك اليوم؟
+            </div>
+        </div>
         <div class="p-3 bg-white border-t border-slate-100 flex gap-2">
-            <input type="text" id="aiInput" placeholder="اسأل المساعد الذكي..." onkeypress="handleKeyPress(event)" class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary">
-            <button onclick="sendAiMessage()" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-primaryDark transition">
-                <i class="fas fa-paper-plane"></i>
-            </button>
+            <input type="text" id="aiInput" placeholder="اسأل عن أرض أو خدمة..." class="flex-1 bg-slate-100 rounded-xl px-3 py-2 text-xs focus:outline-none" onkeypress="if(event.key==='Enter') sendAIMessage()">
+            <button onclick="sendAIMessage()" class="bg-primary text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-primaryDark transition">إرسال</button>
         </div>
     </div>
 
-    <!-- زر فتح المحادثة العائم -->
-    <button onclick="toggleChat()" class="fixed bottom-6 left-6 z-50 bg-primary text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center text-2xl hover:bg-primaryDark transition transform hover:scale-105">
-        <i class="fas fa-robot"></i>
+    <!-- زر فتح المساعد الذكي -->
+    <button onclick="toggleAIChat()" class="fixed bottom-6 left-6 z-50 bg-primary hover:bg-primaryDark text-white p-4 rounded-full shadow-2xl flex items-center justify-center gap-2 transition transform hover:scale-105">
+        <i class="fas fa-robot text-2xl"></i>
+        <span class="hidden md:inline font-bold text-sm">المساعد الذكي</span>
     </button>
 
-    <!-- JavaScript Data & Logic -->
+    <!-- ⚙️ JavaScript المدمج مع المفاتيح المرفقة بالصورة -->
     <script>
-        // مصفوفة العقارات المتاحة
-        const properties = [
-            {
-                id: 1,
-                title: "أرض زراعية بموقع مميز",
-                category: "agricultural",
-                location: "مخطط الرحمانية",
-                price: 450000,
-                area: "10,000 م²",
-                image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&q=80",
-                features: ["صك إلكتروني", "كهرباء متوفرة", "قريبة من الإسفلت"]
-            },
-            {
-                id: 2,
-                title: "مزرعة متكاملة للبيع",
-                category: "agricultural",
-                location: "الهياثم",
-                price: 1200000,
-                area: "25,000 م²",
-                image: "https://images.unsplash.com/photo-1592417817098-8f3d6eb12728?w=600&q=80",
-                features: ["بئر ارتوازي", "أشجار نخيل", "سكن عمال"]
-            },
-            {
-                id: 3,
-                title: "أرض سكنية بصك مستقل",
-                category: "residential",
-                location: "الخرج",
-                price: 350000,
-                area: "600 م²",
-                image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&q=80",
-                features: ["واجهة شمالية", "شارع 20م", "مكتملة الخدمات"]
-            },
-            {
-                id: 4,
-                title: "استراحة فاخرة للمناسبات",
-                category: "resorts",
-                location: "الدلم",
-                price: 850000,
-                area: "1,500 م²",
-                image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=80",
-                features: ["مسبح مفلتر", "مجالس واسعة", "مسطحات خضراء"]
+        // 🔑 المفاتيح الرسمية المرفقة بالصورة:
+        const TELEGRAM_BOT_TOKEN = "8881283361:AAEfeeg4E7540R8Gz3QFFYGEvnmgFN7Sb0w";
+        const TELEGRAM_CHAT_ID = "8298395488";
+        const WHATSAPP_NUMBER = "966545888931";
+        const AI_KEY = "AQ.Ab8RN6KVrf8JtcSRLu-q_SrHuG9jH9AeeDiETKwa48IpNoKv3w";
+
+        // دالة موحدة للإرسال إلى بوت التليجرام مباشرة
+        async function sendToTelegramBot(textMessage) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: textMessage,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (err) {
+                console.error("خطأ في إرسال التليجرام:", err);
             }
-        ];
+        }
 
-        let currentCategory = 'agricultural';
+        // 1. فتح وإغلاق المساعد الذكي
+        function toggleAIChat() {
+            const chat = document.getElementById('aiChatWindow');
+            chat.classList.toggle('hidden-chat');
+            chat.classList.toggle('visible-chat');
+        }
 
-        function renderProperties(items) {
-            const grid = document.getElementById('propertiesGrid');
-            const count = document.getElementById('resultsCount');
-            grid.innerHTML = '';
+        // 2. إرسال استفسار عبر الذكاء الاصطناعي والتليجرام
+        async function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const msg = input.value.trim();
+            if(!msg) return;
+
+            const messagesDiv = document.getElementById('aiMessages');
+            messagesDiv.innerHTML += `<div class="bg-primary/10 text-primary p-3 rounded-xl font-bold ml-6 text-xs mb-2">${msg}</div>`;
+            input.value = '';
+
+            // إرسال الاستفسار للتليجرام
+            await sendToTelegramBot(`🤖 <b>استفسار جديد من المساعد الذكي:</b>\n${msg}`);
+
+            setTimeout(() => {
+                let response = "يسعدنا خدمتك! يمكنك التواصل المباشر معنا للتفاصيل عبر الواتساب.";
+                if(msg.includes("سعر") || msg.includes("كم")) {
+                    response = "تبدأ أسعار الأراضي لدينا في مخطط الرحمانية والهياثم من 320,000 ريال وتختلف حسب المساحة والموقع.";
+                } else if(msg.includes("موقع") || msg.includes("خريطة") || msg.includes("مكان")) {
+                    response = "يمكنك زيارة موقع المكتب المباشر عبر زر الخريطة أو الرابط الموحد في الفوتر بأعلى أو أسفل الصفحة.";
+                } else if(msg.includes("خدمة") || msg.includes("بناء") || msg.includes("بئر")) {
+                    response = "نقدم كافة خدمات ما بعد البيع من استخراج رخص بناء، مقاولات، حفر آبار، وإدارة الأملاك.";
+                }
+                messagesDiv.innerHTML += `<div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-slate-700 mr-6 text-xs mb-2">${response}</div>`;
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 500);
+        }
+
+        // 3. إرسال عرض عقار جديد (واتساب + تليجرام معاً)
+        async function submitPropertyListing(event) {
+            event.preventDefault();
+            const name = document.getElementById('propOwnerName').value;
+            const phone = document.getElementById('propOwnerPhone').value;
+            const type = document.getElementById('propType').value;
+            const location = document.getElementById('propLocation').value;
+            const details = document.getElementById('propDetails').value;
+
+            const telegramMsg = `📩 <b>طلب عرض عقار جديد:</b>\n\n👤 <b>الاسم:</b> ${name}\n📞 <b>الجوال:</b> ${phone}\n🏢 <b>النوع:</b> ${type}\n📍 <b>الموقع:</b> ${location}\n📝 <b>التفاصيل:</b> ${details}`;
             
-            count.textContent = `${items.length} عرض متاح`;
+            // إرسال إشعار التليجرام
+            await sendToTelegramBot(telegramMsg);
 
-            if (items.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-400 font-bold">لا توجد نتائج تطابق خيارات البحث الحالية</div>`;
-                return;
-            }
+            // فتح الواتساب
+            const waMsg = `طلب عرض عقار جديد:\n- الاسم: ${name}\n- الجوال: ${phone}\n- النوع: ${type}\n- الموقع: ${location}\n- تفاصيل: ${details}`;
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
+        }
 
-            items.forEach(item => {
-                const card = `
-                    <div class="property-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-bayut">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
-                            <span class="absolute top-3 right-3 bg-darkNavy/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-md">
-                                ${item.location}
-                            </span>
-                        </div>
-                        <div class="p-5">
-                            <h4 class="font-bold text-lg text-darkNavy mb-2">${item.title}</h4>
-                            <div class="text-primary font-black text-xl mb-3">
-                                ${item.price.toLocaleString()} <span class="text-xs text-slate-500">ريال</span>
-                            </div>
-                            <div class="flex items-center gap-4 text-xs text-slate-500 mb-4 pb-4 border-b border-slate-100">
-                                <span><i class="fas fa-ruler-combined ml-1 text-primary"></i> ${item.area}</span>
-                                <span><i class="fas fa-certificate ml-1 text-primary"></i> صك إلكتروني</span>
-                            </div>
-                            <a href="https://wa.me/966545888931?text=استفسار%20عن%20العقار:%20${encodeURIComponent(item.title)}" target="_blank" class="w-full bg-slate-50 hover:bg-primary hover:text-white text-darkNavy font-bold py-2.5 rounded-xl transition flex items-center justify-center gap-2 text-sm border border-slate-200">
-                                <i class="fab fa-whatsapp"></i> استفسر الآن
-                            </a>
-                        </div>
-                    </div>
-                `;
-                grid.innerHTML += card;
-            });
+        // 4. استفسار مباشر عن عقار معين (واتساب + تليجرام)
+        async function requestPropertyDirect(propTitle) {
+            const msg = `🏠 <b>استفسار عن عقار:</b>\n${propTitle}`;
+            await sendToTelegramBot(msg);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`السلام عليكم، أود الاستفسار عن ${propTitle}`)}`, '_blank');
+        }
+
+        // 5. طلب خدمة (واتساب + تليجرام)
+        async function requestService(serviceName) {
+            const msg = `🛠️ <b>طلب خدمة جديد:</b>\n${serviceName}`;
+            await sendToTelegramBot(msg);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`السلام عليكم، أود طلب خدمة: (${serviceName})`)}`, '_blank');
+        }
+
+        // 6. إرسال التعليقات (واتساب + تليجرام)
+        async function submitComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+            if (!text) return alert('يرجى كتابة التعليق أولاً!');
+
+            const commentsList = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.className = 'bg-emerald-50 p-4 rounded-xl border border-emerald-100 mb-3';
+            newComment.innerHTML = `<div class="flex items-center gap-2 mb-1"><span class="font-bold text-sm text-darkNavy">زائر</span><span class="text-xs text-primary">الآن</span></div><p class="text-sm text-slate-700">${text}</p>`;
+            commentsList.appendChild(newComment);
+
+            await sendToTelegramBot(`💬 <b>تعليق جديد من الموقع:</b>\n"${text}"`);
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`السلام عليكم، لدي استفسار:\n"${text}"`)}`, '_blank');
+            input.value = '';
         }
 
         function switchCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-primary');
-                if (btn.dataset.cat === cat) btn.classList.add('active');
-            });
-            
-            const titles = {
-                agricultural: 'أحدث الأراضي الزراعية المتاحة',
-                residential: 'أحدث الأراضي السكنية المتاحة',
-                resorts: 'أحدث الاستراحات والشاليهات'
-            };
-            document.getElementById('sectionTitle').textContent = titles[cat];
-            applyFilters();
+            document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active', 'text-primary'); b.classList.add('text-slate-500'); });
+            event.currentTarget.classList.add('active', 'text-primary');
         }
-
-        function applyFilters() {
-            const loc = document.getElementById('locationFilter').value;
-            const price = document.getElementById('priceFilter').value;
-
-            let filtered = properties.filter(p => p.category === currentCategory);
-
-            if (loc !== 'all') {
-                filtered = filtered.filter(p => p.location.includes(loc));
-            }
-
-            if (price !== 'all') {
-                if (price === '0-600000') filtered = filtered.filter(p => p.price <= 600000);
-                else if (price === '600000-1000000') filtered = filtered.filter(p => p.price > 600000 && p.price <= 1000000);
-                else if (price === '1000000+') filtered = filtered.filter(p => p.price > 1000000);
-            }
-
-            renderProperties(filtered);
-        }
-
-        function resetFilters() {
-            document.getElementById('locationFilter').value = 'all';
-            document.getElementById('priceFilter').value = 'all';
-            applyFilters();
-        }
-
-        // AI Chatbot Logic
-        function toggleChat() {
-            const win = document.getElementById('aiChatWindow');
-            win.classList.toggle('hidden-chat');
-            win.classList.toggle('visible-chat');
-        }
-
-        function handleKeyPress(e) {
-            if (e.key === 'Enter') sendAiMessage();
-        }
-
-        function sendAiMessage() {
-            const input = document.getElementById('aiInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const box = document.getElementById('chatMessages');
-            
-            // User Message
-            box.innerHTML += `
-                <div class="bg-primary text-white p-3 rounded-xl ml-auto max-w-[85%] text-left">
-                    ${text}
-                </div>
-            `;
-            
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
-
-            // Simulated AI Answer
-            setTimeout(() => {
-                let reply = "شكراً لتواصلك! يسعدنا إجابتك على استفساراتك حول العقارات في الرياض والخرج. يمكنك التواصل المباشر مع مستشارينا عبر الواتساب للحصول على تفاصيل أكثر.";
-                if (text.includes('سعر') || text.includes('أسعار')) {
-                    reply = "تبدأ أسعار الأراضي الزراعية المتاحة لدينا من 450,000 ريال وتختلف حسب المساحة والموقع والخدمات المتوفرة.";
-                } else if (text.includes('الخرج') || text.includes('الهياثم')) {
-                    reply = "تتوفر لدينا مجموعة ممتازة من المزارع والأراضي في الهياثم والخرج بمخططات موثوقة وصكوك إلكترونية.";
-                }
-
-                box.innerHTML += `
-                    <div class="bg-white p-3 rounded-xl border border-slate-100 text-slate-700 shadow-sm max-w-[85%]">
-                        ${reply}
-                    </div>
-                `;
-                box.scrollTop = box.scrollHeight;
-            }, 600);
-        }
-
-        function submitPropertyListing(e) {
-            e.preventDefault();
-            alert('تم استلام طلبك بنجاح! سيتواصل معك أحد مستشارينا في أقرب وقت.');
-        }
-
-        // Initialize display
-        window.onload = () => {
-            renderProperties(properties.filter(p => p.category === 'agricultural'));
-        };
+        function applyFilters() { alert('تم تطبيق الفلترة'); }
+        function resetFilters() { document.getElementById('locationFilter').value = 'all'; document.getElementById('priceFilter').value = 'all'; }
     </script>
 </body>
 </html>
