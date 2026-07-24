@@ -12,7 +12,7 @@ http.createServer((req, res) => {
 const TelegramBot = require('node-telegram-bot-api');
 
 // 2. التوكن المباشر والصحيح للبوت الجديد
-const BOT_TOKEN = '8881283361:AAGQ7Qw1tIkvHyUtkHbGs1x5E5Yh7LzIuU';
+const BOT_TOKEN = '8968555626:AAFPVptuaQ_o6j-eJSEfsm-A7kQBWG22mtc';
 
 // 3. تهيئة البوت
 const bot = new TelegramBot(BOT_TOKEN, {
