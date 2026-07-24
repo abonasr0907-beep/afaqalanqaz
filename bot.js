@@ -1,6 +1,6 @@
 const http = require('http');
 
-// خادم ويب بسيط لإرضاء نظام Render وإبقاء الخدمة نشطة
+// خادم ويب بسيط لإبقاء الخدمة نشطة على Render
 const PORT = process.env.PORT || 10000;
 http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -10,13 +10,20 @@ http.createServer((req, res) => {
 });
 
 const TelegramBot = require('node-telegram-bot-api');
-const axios = require('axios');
 
 // المفاتيح المعتمدة
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7...';
-const ADMIN_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '8298395488';
 
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+// إنشاء كائن البوت مع خيارات تحسين الاتصال
+const bot = new TelegramBot(BOT_TOKEN, {
+  polling: {
+    interval: 300,
+    autoStart: true,
+    params: {
+      timeout: 10
+    }
+  }
+});
 
 // قائمة لوحة التحكم
 const adminControlPanel = {
@@ -41,8 +48,15 @@ const adminControlPanel = {
   }
 };
 
-// الاستجابة لأي نص أو رسالة يتم إرسالها دون أي شروط
+// الاستجابة لأي رسالة (بما فيها /start وأي نص آخر)
 bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel);
+  if (msg.chat && msg.chat.id) {
+    bot.sendMessage(msg.chat.id, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel)
+      .catch((err) => console.error('Error sending message:', err));
+  }
+});
+
+// معالجة الأخطاء لتفادي توقف البوت
+bot.on('polling_error', (error) => {
+  console.log('Polling error:', error.code, error.message);
 });
