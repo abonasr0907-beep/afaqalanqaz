@@ -11,9 +11,8 @@ http.createServer((req, res) => {
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// 2. التوكن تم تنظيفه تماماً ودون أي مسافات خفية
-const RAW_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1xE5Yh7LzIuU';
-const BOT_TOKEN = RAW_TOKEN.trim();
+// 2. التوكن المباشر والصحيح للبوت الجديد
+const BOT_TOKEN = '8881283361:AAGQ7Qw1tIkvHyUtkHbGs1x5E5Yh7LzIuU';
 
 // 3. تهيئة البوت
 const bot = new TelegramBot(BOT_TOKEN, {
