@@ -1,39 +1,395 @@
-<script>
-  // التوكن الجديد ومعرف حسابك للأدمن
-  const TELEGRAM_BOT_TOKEN = '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1x5E5Yh7LzIuU';
-  const TELEGRAM_ADMIN_CHAT_ID = '8298395488';
-
-  /**
-   * دالة لإرسال إشعار أو تعليق جديد إلى تليجرام
-   * @param {string} messageText - النص المراد إرساله
-   */
-  async function sendNotificationToTelegram(messageText) {
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="مكتب آفاق الإنجاز العقاري - خبرة 20 عاماً في تسويق الأراضي الزراعية والسكنية والاستراحات بالرياض والخرج. مرخص من الهيئة العامة للعقار.">
+    <meta name="keywords" content="آفاق الإنجاز العقاري, أراضي زراعية الخرج, استراحات, عقارات الرياض, مخطط الرحمانية, الهياثم, الدلم, العرجاء">
+    <title>آفاق الإنجاز العقاري | أراضي زراعية وسكنية واستراحات بالرياض والخرج</title>
     
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_ADMIN_CHAT_ID,
-          text: messageText,
-          parse_mode: 'HTML'
-        })
-      });
+    <!-- Fonts & Libraries -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00A651', // أخضر زمردي فاخر
+                        primaryDark: '#008f45',
+                        darkNavy: '#0F172A', // كحلي داكن
+                        bgLight: '#F8FAFC', // رمادي فاتح خلفية
+                    },
+                    fontFamily: {
+                        tajawal: ['Tajawal', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'bayut': '0 4px 20px rgba(0, 0, 0, 0.06)',
+                        'bayut-hover': '0 12px 30px rgba(0, 166, 81, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * { font-family: 'Tajawal', sans-serif; }
+        body { background-color: #F8FAFC; color: #0F172A; }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 55vh;
+        }
+        
+        .search-tabs .tab-btn {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .search-tabs .tab-btn.active {
+            color: #00A651;
+            border-bottom-color: #00A651;
+            font-weight: 800;
+        }
+        
+        .property-card {
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .property-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 30px rgba(0, 166, 81, 0.12);
+        }
+        
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
 
-      const data = await response.json();
-      if (data.ok) {
-        console.log('تم إرسال الإشعار بنجاح إلى تليجرام!');
-      } else {
-        console.error('حدث خطأ أثناء الإرسال:', data.description);
-      }
-    } catch (error) {
-      console.error('خطأ في الاتصال بـ Telegram API:', error);
-    }
-  }
+        .verified-badge {
+            background: linear-gradient(135deg, #00A651 0%, #008f45 100%);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F8FAFC; }
+        ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00A651; }
+    </style>
+</head>
+<body class="antialiased">
 
-  // مثال على الاستخدام عند إرسال تعليق أو طلب جديد من الموقع:
-  // sendNotificationToTelegram('<b>💬 تعليق جديد من الموقع:</b>\nقام أحد الزوار بإضافة تعليق جديد على العقار رقم #102');
-</script>
+    <!-- 1. الهيدر العلوي -->
+    <header class="glass-header sticky top-0 z-40 py-3">
+        <div class="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-lg">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-darkNavy leading-tight">آفاق الإنجاز العقاري</h1>
+                    <span class="verified-badge">
+                        <i class="fas fa-check-circle"></i>
+                        موثق من الهيئة العامة للعقار | رخصة فال | رخصة مزاولة مهنة
+                    </span>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">
+                <a href="#home" class="hover:text-primary transition">الرئيسية</a>
+                <a href="#listings" class="hover:text-primary transition">العقارات</a>
+                <a href="#list-your-property" class="hover:text-primary transition">اعرض عقارك</a>
+                <a href="#services" class="hover:text-primary transition">خدمات ما بعد البيع</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="https://t.me/afaqalanqaz" target="_blank" class="hidden sm:flex items-center gap-2 bg-sky-500 text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-sky-600 transition shadow-md">
+                    <i class="fab fa-telegram-plane text-lg"></i> تليجرام
+                </a>
+                <a href="https://wa.me/966545888931?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20العروض%20العقارية" target="_blank" class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-primaryDark transition shadow-lg shadow-emerald-200">
+                    <i class="fab fa-whatsapp text-lg"></i> تواصل مباشر
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. شريط البحث الرئيسي -->
+    <section id="home" class="hero-bg relative flex items-center justify-center px-4">
+        <div class="container mx-auto max-w-5xl pt-10 pb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-3">وجهتك الموثوقة للاستثمار العقاري</h2>
+                <p class="text-slate-200 text-lg">أكثر من 500 عقار متاح ومباع بالرياض والخرج بأعلى معايير الأمانة والاحترافية</p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-2xl p-2 md:p-4">
+                <div class="search-tabs flex gap-6 px-4 pb-3 border-b border-slate-100 mb-4 overflow-x-auto">
+                    <button onclick="switchCategory('agricultural')" class="tab-btn active whitespace-nowrap pb-2 text-darkNavy" data-cat="agricultural">
+                        <i class="fas fa-seedling ml-1"></i> الأراضي الزراعية
+                    </button>
+                    <button onclick="switchCategory('residential')" class="tab-btn whitespace-nowrap pb-2 text-slate-500 hover:text-darkNavy" data-cat="residential">
+                        <i class="fas fa-home ml-1"></i> الأراضي السكنية
+                    </button>
+                    <button onclick="switchCategory('resorts')" class="tab-btn whitespace-nowrap pb-2 text-slate-500 hover:text-darkNavy" data-cat="resorts">
+                        <i class="fas fa-umbrella-beach ml-1"></i> الاستراحات والشاليهات
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 p-2">
+                    <div class="relative">
+                        <i class="fas fa-map-marker-alt absolute right-4 top-3.5 text-slate-400"></i>
+                        <select id="locationFilter" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pr-10 pl-4 text-sm font-bold text-darkNavy focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none cursor-pointer">
+                            <option value="all">جميع المواقع</option>
+                            <option value="الهياثم">الهياثم</option>
+                            <option value="الرحمانية">مخطط الرحمانية</option>
+                            <option value="الدلم">الدلم</option>
+                            <option value="العرجاء">العرجاء</option>
+                            <option value="الخرج">الخرج</option>
+                            <option value="الرياض">الرياض</option>
+                        </select>
+                    </div>
+                    
+                    <div class="relative">
+                        <i class="fas fa-money-bill-wave absolute right-4 top-3.5 text-slate-400"></i>
+                        <select id="priceFilter" class="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pr-10 pl-4 text-sm font-bold text-darkNavy focus:outline-none focus:ring-2 focus:ring-primary/20 appearance-none cursor-pointer">
+                            <option value="all">نطاق السعر</option>
+                            <option value="0-600000">حتى 600,000 ريال</option>
+                            <option value="600000-1000000">600,000 - 1,000,000 ريال</option>
+                            <option value="1000000-1500000">1,000,000 - 1,500,000 ريال</option>
+                            <option value="1500000+">أكثر من 1,500,000 ريال</option>
+                        </select>
+                    </div>
+
+                    <button onclick="applyFilters()" class="bg-darkNavy text-white rounded-xl font-bold py-3 px-6 hover:bg-slate-800 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-search"></i> بحث
+                    </button>
+                    
+                    <button onclick="resetFilters()" class="bg-slate-100 text-slate-600 rounded-xl font-bold py-3 px-6 hover:bg-slate-200 transition flex items-center justify-center gap-2">
+                        <i class="fas fa-redo"></i> إعادة ضبط
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. قسم العروض العقارية -->
+    <section id="listings" class="container mx-auto px-4 py-16">
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h3 class="text-2xl md:text-3xl font-black text-darkNavy" id="sectionTitle">أحدث الأراضي الزراعية المتاحة</h3>
+                <p class="text-slate-500 mt-1">عقارات مختارة بعناية، مضمونة الصك، وجاهزة للإفراغ</p>
+            </div>
+            <span class="bg-emerald-50 text-primary px-4 py-2 rounded-full text-sm font-bold border border-emerald-100" id="resultsCount">متاح حالياً</span>
+        </div>
+
+        <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="bg-white rounded-2xl shadow-bayut overflow-hidden border border-slate-100 property-card">
+                <div class="relative h-56 bg-slate-200">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80" alt="أرض زراعية" class="w-full h-full object-cover">
+                    <span class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">أرض زراعية</span>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-black text-darkNavy mb-2">قطعة أرض زراعية بمخطط الرحمانية</h4>
+                    <p class="text-slate-500 text-sm mb-4 flex items-center gap-2"><i class="fas fa-map-marker-alt text-primary"></i> الخرج - مخطط الرحمانية</p>
+                    <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                        <span class="text-primary font-black text-lg">750,000 ر.س</span>
+                        <a href="https://wa.me/966545888931?text=السلام%20عليكم،%20أهتم%20بالاستفسار%20عن%20أرض%20مخطط%20الرحمانية" target="_blank" class="bg-emerald-50 text-primary px-4 py-2 rounded-xl font-bold text-sm hover:bg-primary hover:text-white transition">استفسر الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم التعليقات التفاعلي -->
+        <div class="mt-16 bg-white rounded-2xl p-6 md:p-8 shadow-bayut border border-slate-100">
+            <h4 class="text-xl font-bold text-darkNavy mb-4 flex items-center gap-2">
+                <i class="fas fa-comments text-primary"></i> آراء واستفسارات الزوار حول العروض
+            </h4>
+            <div id="commentsList" class="space-y-4 mb-6 max-h-60 overflow-y-auto pr-2">
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="font-bold text-sm text-darkNavy">أبو محمد</span>
+                        <span class="text-xs text-slate-400">منذ يومين</span>
+                    </div>
+                    <p class="text-sm text-slate-600">عروض ممتازة وأسعار منافسة جداً في مخطط الرحمانية، بارك الله فيكم.</p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <input type="text" id="commentInput" placeholder="اكتب رأيك أو استفسارك هنا..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20">
+                <button onclick="submitComment()" class="bg-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-primaryDark transition">
+                    <i class="fas fa-paper-plane"></i> إرسال
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. قسم اعرض عقارك معنا -->
+    <section id="list-your-property" class="bg-darkNavy py-16 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center mb-10">
+                <h3 class="text-3xl font-black text-white mb-3">هل تملك مزرعة أو أرضاً وتريد عرضها لدينا؟</h3>
+                <p class="text-slate-300">نقدم لك تقييماً مجانياً وسريعاً لعقارك، مع تسويق احترافي يضمن لك أفضل سعر في أسرع وقت.</p>
+            </div>
+            <div class="max-w-2xl mx-auto bg-white/10 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/20">
+                <form onsubmit="submitPropertyListing(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" id="propOwnerName" placeholder="الاسم الكريم" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <input type="tel" id="propOwnerPhone" placeholder="رقم الجوال" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <select id="propType" class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                        <option value="أرض زراعية">أرض زراعية</option>
+                        <option value="أرض سكنية">أرض سكنية</option>
+                        <option value="مزرعة قائمة">مزرعة قائمة</option>
+                        <option value="استراحة">استراحة / شاليه</option>
+                    </select>
+                    <input type="text" id="propLocation" placeholder="موقع العقار (الحي / المخطط)" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
+                    <textarea id="propDetails" placeholder="تفاصيل إضافية (المساحة، السعر المتوقع، المميزات)" rows="2" class="md:col-span-2 bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary"></textarea>
+                    <button type="submit" class="md:col-span-2 bg-primary text-white font-black py-4 rounded-xl hover:bg-primaryDark transition flex items-center justify-center gap-2 text-lg shadow-lg">
+                        <i class="fas fa-paper-plane"></i> إرسال طلب التقييم والعرض
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. قسم خدمات ما بعد البيع -->
+    <section id="services" class="bg-white py-16 border-y border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-primary font-bold text-sm tracking-wider uppercase">خدمات متكاملة</span>
+                <h3 class="text-3xl font-black text-darkNavy mt-2">خدمات ما بعد البيع وإدارة الأملاك</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">استخراج رخص البناء</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">متابعة وتخليص إجلاء وتصاريح البناء الرسمية بكفاءة.</p>
+                    <button onclick="requestService('استخراج رخص البناء')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">المقاولات والتشطيب</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">بناء وتأهيل معماري متكامل، استلام عظم أو مفتاح.</p>
+                    <button onclick="requestService('المقاولات والتشطيب')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">حفر وتحديد الآبار</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">كشف وتحديد التجمعات المائية الجوفية وحفر الآبار.</p>
+                    <button onclick="requestService('حفر وتحديد الآبار')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fas fa-building-user"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">إدارة الأملاك</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">تحصيل الإيجارات، صيانة المجمعات، وإدارة المزارع.</p>
+                    <button onclick="requestService('إدارة الأملاك')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">
+                        طلب الخدمة <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ربط الموقع ببوت تيليجرام (الإشعارات والطلبات) -->
+    <script>
+        const TELEGRAM_BOT_TOKEN = '8881283361:AAGQ7Qwt1tlkvHyUtkHbGs1x5E5Yh7LzIuU';
+        const TELEGRAM_ADMIN_CHAT_ID = '8298395488';
+
+        async function sendNotificationToTelegram(messageText) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_ADMIN_CHAT_ID,
+                        text: messageText,
+                        parse_mode: 'HTML'
+                    })
+                });
+            } catch (error) {
+                console.error('Telegram API Error:', error);
+            }
+        }
+
+        // إرسال طلبات اعرض عقارك
+        function submitPropertyListing(event) {
+            event.preventDefault();
+            const name = document.getElementById('propOwnerName').value;
+            const phone = document.getElementById('propOwnerPhone').value;
+            const type = document.getElementById('propType').value;
+            const location = document.getElementById('propLocation').value;
+            const details = document.getElementById('propDetails').value;
+
+            const msg = `<b>🏠 طلب إدراج عقار جديد من الموقع:</b>\n\n👤 الاسم: ${name}\n📞 الجوال: ${phone}\n📌 النوع: ${type}\n📍 الموقع: ${location}\n📝 التفاصيل: ${details}`;
+            
+            sendNotificationToTelegram(msg);
+            alert('تم إرسال طلبك بنجاح، سيتم التواصل معك قريباً!');
+            event.target.reset();
+        }
+
+        // إرسال طلبات خدمات ما بعد البيع
+        function requestService(serviceName) {
+            const msg = `<b>🛠️ طلب خدمة جديدة من الموقع:</b>\nالخدمة المطلوبة: ${serviceName}`;
+            sendNotificationToTelegram(msg);
+            alert(`تم إرسال طلبك لخدمة (${serviceName}) بنجاح، سنتواصل معك فوراً.`);
+        }
+
+        // إرسال التعليقات والآراء
+        function submitComment() {
+            const commentText = document.getElementById('commentInput').value.trim();
+            if (!commentText) return;
+
+            const msg = `<b>💬 تعليق/استفسار جديد من الزوار:</b>\n${commentText}`;
+            sendNotificationToTelegram(msg);
+            alert('شكراً لك، تم إرسال تعليقك بنجاح.');
+            document.getElementById('commentInput').value = '';
+        }
+
+        function switchCategory(cat) {
+            document.querySelectorAll('.search-tabs .tab-btn').forEach(btn => btn.classList.remove('active', 'text-darkNavy'));
+            document.querySelectorAll('.search-tabs .tab-btn').forEach(btn => btn.classList.add('text-slate-500'));
+            
+            const activeBtn = document.querySelector(`[data-cat="${cat}"]`);
+            if (activeBtn) {
+                activeBtn.classList.add('active', 'text-darkNavy');
+                activeBtn.classList.remove('text-slate-500');
+            }
+        }
+
+        function applyFilters() {
+            alert('تم تطبيق الفلترة بنجاح');
+        }
+
+        function resetFilters() {
+            document.getElementById('locationFilter').value = 'all';
+            document.getElementById('priceFilter').value = 'all';
+        }
+    </script>
+</body>
+</html>
