@@ -1,24 +1,70 @@
 const http = require('http');
+const fs = require('fs');
+const path = require('path');
+const TelegramBot = require('node-telegram-bot-api');
 
 const PORT = process.env.PORT || 10000;
-http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Bot is running smoothly!');
-}).listen(PORT, '0.0.0.0', () => {
+const BOT_TOKEN = '8968555626:AAFPVptuaQ_o6j-eJSEfsm-A7kQBWG22mtc';
+const DB_FILE = path.join(__dirname, 'properties.json');
+
+// دوال قراءة وكتابة قاعدة البيانات المحلية (ملف JSON)
+function getProperties() {
+  try {
+    if (!fs.existsSync(DB_FILE)) return [];
+    const data = fs.readFileSync(DB_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (err) {
+    console.error('Error reading DB:', err);
+    return [];
+  }
+}
+
+function saveProperty(newProp) {
+  const properties = getProperties();
+  properties.unshift(newProp); // إضافة العقار الجديد في البداية
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(properties, null, 2), 'utf8');
+  } catch (err) {
+    console.error('Error saving DB:', err);
+  }
+}
+
+// إنشاء خادم الويب (يدعم تشغيل البوت + API للموقع ليعرض العقارات)
+const server = http.createServer((req, res) => {
+  // السماح بالوصول من أي مصدر (CORS) لكي يتمكن موقعك من قراءة البيانات
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
+  // مسار API لجلب العقارات على الموقع
+  if (req.url === '/api/properties' && req.method === 'GET') {
+    const props = getProperties();
+    res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+    res.end(JSON.stringify(props));
+    return;
+  }
+
+  // الصفحة الرئيسية للسيرفر
+  res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('Afaq Al Anqaz Real Estate Bot & API Server is running smoothly!');
+});
+
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server listening on port ${PORT}`);
 });
 
-const TelegramBot = require('node-telegram-bot-api');
-
-const BOT_TOKEN = '8968555626:AAFPVptuaQ_o6j-eJSEfsm-A7kQBWG22mtc';
-
+// إعداد بوت تيليجرام
 const bot = new TelegramBot(BOT_TOKEN, {
   polling: {
     interval: 300,
     autoStart: true,
-    params: {
-      timeout: 10
-    }
+    params: { timeout: 10 }
   }
 });
 
@@ -96,10 +142,17 @@ bot.on('photo', (msg) => {
 
   if (state && (state.step === 'waiting_for_media' || state.step === 'waiting_for_media_optional')) {
     const photo = msg.photo[msg.photo.length - 1];
-    state.mediaId = photo.file_id;
-    state.mediaType = 'صورة';
-
-    finishPropertyUpload(chatId, state);
+    
+    // للحصول على رابط مباشر لملف الصورة من تيليجرام
+    bot.getFileLink(photo.file_id).then((fileLink) => {
+      state.mediaUrl = fileLink;
+      state.mediaType = 'صورة';
+      finishPropertyUpload(chatId, state);
+    }).catch(() => {
+      state.mediaUrl = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80';
+      state.mediaType = 'صورة';
+      finishPropertyUpload(chatId, state);
+    });
   }
 });
 
@@ -110,22 +163,41 @@ bot.on('video', (msg) => {
 
   if (state && (state.step === 'waiting_for_media' || state.step === 'waiting_for_media_optional')) {
     const video = msg.video;
-    state.mediaId = video.file_id;
-    state.mediaType = 'فيديو';
-
-    finishPropertyUpload(chatId, state);
+    
+    bot.getFileLink(video.file_id).then((fileLink) => {
+      state.mediaUrl = fileLink;
+      state.mediaType = 'فيديو';
+      finishPropertyUpload(chatId, state);
+    }).catch(() => {
+      state.mediaUrl = '';
+      state.mediaType = 'فيديو';
+      finishPropertyUpload(chatId, state);
+    });
   }
 });
 
 function finishPropertyUpload(chatId, state) {
   const detailsText = state.details ? state.details : 'بدون تفاصيل إضافية';
   
+  const newProperty = {
+    id: Date.now(),
+    category: state.category,
+    categoryName: state.categoryName,
+    details: detailsText,
+    mediaUrl: state.mediaUrl,
+    mediaType: state.mediaType,
+    date: new Date().toLocaleDateString('ar-SA')
+  };
+
+  // حفظ العقار في قاعدة البيانات المحلية
+  saveProperty(newProperty);
+
   bot.sendMessage(
     chatId,
-    `🎉 تم استلام العقار والوسائط (${state.mediaType}) بنجاح!\n\n` +
+    `🎉 تم نشر العقار بنجاح وتم ربطه بالموقع الإلكتروني تلقائياً!\n\n` +
     `📌 القسم: ${state.categoryName}\n` +
     `📝 التفاصيل: ${detailsText}\n` +
-    `🖼️ الحالة: جاهز للربط وعرضه في الموقع.`
+    `🌐 الحالة: معروض الآن في الموقع.`
   );
 
   userStates[chatId] = { step: 'idle' };
