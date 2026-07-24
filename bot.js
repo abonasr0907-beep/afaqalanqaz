@@ -11,10 +11,9 @@ http.createServer((req, res) => {
 
 const TelegramBot = require('node-telegram-bot-api');
 
-// 2. التوكن المباشر والصحيح للبوت الجديد
+// 2. التوكن المباشر للبوت
 const BOT_TOKEN = '8968555626:AAFPVptuaQ_o6j-eJSEfsm-A7kQBWG22mtc';
 
-// 3. تهيئة البوت
 const bot = new TelegramBot(BOT_TOKEN, {
   polling: {
     interval: 300,
@@ -25,38 +24,123 @@ const bot = new TelegramBot(BOT_TOKEN, {
   }
 });
 
-// 4. أزرار لوحة التحكم الإدارية
+// تخزين مؤقت لحالة المحادثة الخاصة بكل مستخدم
+const userStates = {};
+
+// أزرار لوحة التحكم الإدارية الرئيسية
 const adminControlPanel = {
   reply_markup: {
     inline_keyboard: [
       [
         { text: '➕ إضافة عقار / أرض', callback_data: 'add_property' },
-        { text: '🗑️ حذف / تعديل عقار', callback_data: 'manage_property' }
-      ],
-      [
-        { text: '📝 نشر مقال جديد', callback_data: 'add_article' },
         { text: '🛠️ خدمات ما بعد البيع', callback_data: 'after_sales' }
       ],
       [
-        { text: '🖼️ إدارة الصور والمعرض', callback_data: 'manage_gallery' },
-        { text: '📊 إحصائيات الموقع', callback_data: 'stats' }
-      ],
-      [
-        { text: '🔔 إشعارات الطلبات والتعليقات', callback_data: 'notifications' }
+        { text: '📝 نشر مقال أو إعلان', callback_data: 'add_article' },
+        { text: '📊 إحصائيات الطلبات', callback_data: 'stats' }
       ]
     ]
   }
 };
 
-// 5. الاستجابة لأي رسالة يتم إرسالها للبوت
+// أزرار اختيار أقسام العقارات
+const categoriesKeyboard = {
+  reply_markup: {
+    inline_keyboard: [
+      [
+        { text: '🌾 أراضي زراعية', callback_data: 'cat_agricultural' },
+        { text: '🏡 أراضي سكنية', callback_data: 'cat_residential' }
+      ],
+      [
+        { text: '🏖️ استراحات وشاليهات', callback_data: 'cat_resorts' },
+        { text: '❌ إلغاء', callback_data: 'cancel' }
+      ]
+    ]
+  }
+};
+
+// 3. الاستماع للرسائل والأوامر
 bot.on('message', (msg) => {
-  if (msg.chat && msg.chat.id) {
-    bot.sendMessage(msg.chat.id, 'أهلاً بك في لوحة تحكم إدارة الموقع والعقارات:', adminControlPanel)
-      .catch((err) => console.error('Error sending message:', err.message));
+  const chatId = msg.chat.id;
+  const text = msg.text;
+
+  if (text === '/start') {
+    userStates[chatId] = { step: 'idle' };
+    bot.sendMessage(chatId, 'أهلاً بك يا صاحب المكتب في لوحة تحكم "آفاق الإنجاز العقاري":', adminControlPanel);
+    return;
+  }
+
+  // معالجة الخطوات التفاعلية حسب حالة المستخدم
+  const state = userStates[chatId];
+  if (!state || state.step === 'idle') return;
+
+  if (state.step === 'waiting_for_details') {
+    state.details = text;
+    state.step = 'waiting_for_image';
+    bot.sendMessage(chatId, 'ممتاز. الآن أرسل **صورة العقار** (أو صور متعددة):');
+  } else if (state.step === 'waiting_for_article') {
+    bot.sendMessage(chatId, `✅ تم استلام المقال / الإعلان بنجاح:\n\n${text}\n\nتم حفظه وتجهيزه للنشر.`);
+    userStates[chatId] = { step: 'idle' };
+    bot.sendMessage(chatId, 'الخيارات الرئيسية:', adminControlPanel);
   }
 });
 
-// 6. التعامل مع أخطاء الاتصال بطريقة نظيفة
+// 4. الاستماع للصور المرسلة من المستخدم
+bot.on('photo', (msg) => {
+  const chatId = msg.chat.id;
+  const state = userStates[chatId];
+
+  if (state && state.step === 'waiting_for_image') {
+    const photo = msg.photo[msg.photo.length - 1]; // أخذ أعلى جودة للصورة
+    state.photoId = photo.file_id;
+
+    bot.sendMessage(
+      chatId,
+      `🎉 تم استلام العقار بنجاح!\n\n` +
+      `📌 القسم: ${state.categoryName}\n` +
+      `📝 التفاصيل: ${state.details}\n` +
+      `🖼️ الحالة: جاهز للربط والعرض بالموقع.`
+    );
+
+    userStates[chatId] = { step: 'idle' };
+    bot.sendMessage(chatId, 'اختر عملية أخرى:', adminControlPanel);
+  }
+});
+
+// 5. التعامل مع الضغط على الأزرار التفاعلية (Callback Queries)
+bot.on('callback_query', (query) => {
+  const chatId = query.message.chat.id;
+  const data = query.data;
+
+  if (data === 'add_property') {
+    userStates[chatId] = { step: 'waiting_for_category' };
+    bot.sendMessage(chatId, 'الرجاء اختيار قسم العقار:', categoriesKeyboard);
+  } else if (data.startsWith('cat_')) {
+    const catMap = {
+      'cat_agricultural': 'أراضي زراعية',
+      'cat_residential': 'أراضي سكنية',
+      'cat_resorts': 'استراحات وشاليهات'
+    };
+    userStates[chatId] = { 
+      step: 'waiting_for_details', 
+      category: data, 
+      categoryName: catMap[data] 
+    };
+    bot.sendMessage(chatId, `لقد اخترت قسم (${catMap[data]}).\nالآن أرسل تفاصيل العقار (الموقع، المساحة، السعر):`);
+  } else if (data === 'add_article') {
+    userStates[chatId] = { step: 'waiting_for_article' };
+    bot.sendMessage(chatId, 'أرسل نص المقال أو الإعلان الجديد الذي تريد نشره:');
+  } else if (data === 'cancel') {
+    userStates[chatId] = { step: 'idle' };
+    bot.sendMessage(chatId, 'تم الإلغاء.', adminControlPanel);
+  } else if (data === 'after_sales' || data === 'stats') {
+    bot.sendMessage(chatId, 'هذه الخدمة قيد التفعيل، سيتم ربطها قريباً.');
+  }
+
+  bot.answerCallbackQuery(query.id);
+});
+
+// 6. التعامل مع أخطاء الاتصال
 bot.on('polling_error', (error) => {
   console.log(`[Polling Error] ${error.code}: ${error.message}`);
 });
