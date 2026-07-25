@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مكتب آفاق الإنجاز العقاري - أراضي زراعية وسكنية واستراحات">
+    <title>آفاق الإنجاز العقاري | أراضي زراعية وسكنية واستراحات</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { primary: '#00A651', primaryDark: '#008f45', darkNavy: '#0F172A', bgLight: '#F8FAFC' },
+                    fontFamily: { tajawal: ['Tajawal', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * { font-family: 'Tajawal', sans-serif; }
+        body { background-color: #F8FAFC; color: #0F172A; }
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
+            background-size: cover; background-position: center; min-height: 55vh;
+        }
+        .property-card { transition: all 0.35s; }
+        .property-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(0, 166, 81, 0.12); }
+        .glass-header { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); }
+        #mapContainer, #unifiedMapContainer { height: 400px; width: 100%; border-radius: 12px; }
+        #unifiedMapContainer { height: 600px; }
+        
+        /* تنسيق المساعد الذكي */
+        .ai-chat-widget {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            z-index: 40;
+        }
+        .ai-chat-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s;
+        }
+        .ai-chat-button:hover { transform: scale(1.1); }
+        .ai-chat-window {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .ai-chat-window.active { display: flex; }
+        .ai-chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+        .ai-chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        .ai-message {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+        .user-message {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            margin-right: auto;
+            max-width: 80%;
+        }
+        .ai-chat-input {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            gap: 10px;
+        }
+        .ai-chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            outline: none;
+        }
+        .ai-chat-input button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- الهيدر -->
+    <header class="glass-header sticky top-0 z-40 py-3 shadow-sm">
+        <div class="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white text-xl shadow-lg">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-black text-darkNavy">آفاق الإنجاز العقاري</h1>
+                    <span class="text-xs bg-emerald-100 text-primary px-2 py-1 rounded-full">موثق من الهيئة العامة للعقار</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-bold text-slate-600">
+                <a href="#home" class="hover:text-primary transition">الرئيسية</a>
+                <a href="#listings" class="hover:text-primary transition">العقارات</a>
+                <a href="#market-news" class="hover:text-primary transition">أخبار السوق</a>
+                <a href="#services" class="hover:text-primary transition">خدماتنا</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <a href="https://t.me/afaqalanqaz" target="_blank" class="bg-sky-500 text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-sky-600 transition">
+                    <i class="fab fa-telegram-plane"></i> تليجرام
+                </a>
+                <a href="https://wa.me/966545888931" target="_blank" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-primaryDark transition">
+                    <i class="fab fa-whatsapp"></i> تواصل
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- شريط البحث -->
+    <section id="home" class="hero-bg relative flex items-center justify-center px-4">
+        <div class="container mx-auto max-w-5xl pt-10 pb-16">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-5xl font-black text-white mb-3">وجهتك الموثوقة للاستثمار العقاري</h2>
+                <p class="text-slate-200 text-lg">مئات العقارات المتاحة بالرياض والخرج</p>
+            </div>
+            <div class="bg-white rounded-2xl shadow-2xl p-4">
+                <div class="flex gap-4 mb-4 overflow-x-auto">
+                    <button onclick="switchCategory('agricultural')" class="tab-btn active whitespace-nowrap pb-2 text-darkNavy font-bold border-b-2 border-primary" data-cat="agricultural">
+                        <i class="fas fa-seedling ml-1"></i> الأراضي الزراعية
+                    </button>
+                    <button onclick="switchCategory('residential')" class="tab-btn whitespace-nowrap pb-2 text-slate-500 font-bold border-b-2 border-transparent" data-cat="residential">
+                        <i class="fas fa-home ml-1"></i> الأراضي السكنية
+                    </button>
+                    <button onclick="switchCategory('resorts')" class="tab-btn whitespace-nowrap pb-2 text-slate-500 font-bold border-b-2 border-transparent" data-cat="resorts">
+                        <i class="fas fa-umbrella-beach ml-1"></i> الاستراحات
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <select id="locationFilter" class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold">
+                        <option value="all">جميع المواقع</option>
+                        <option value="الهياثم">الهياثم</option>
+                        <option value="الرحمانية">مخطط الرحمانية</option>
+                        <option value="الدلم">الدلم</option>
+                        <option value="الخرج">الخرج</option>
+                        <option value="الرياض">الرياض</option>
+                    </select>
+                    <select id="priceFilter" class="bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-bold">
+                        <option value="all">نطاق السعر</option>
+                        <option value="0-600000">حتى 600,000 ريال</option>
+                        <option value="600000-1000000">600,000 - 1,000,000 ريال</option>
+                        <option value="1000000+">أكثر من 1,000,000 ريال</option>
+                    </select>
+                    <button onclick="applyFilters()" class="bg-darkNavy text-white rounded-xl font-bold py-3 hover:bg-slate-800 transition">
+                        <i class="fas fa-search ml-2"></i> بحث
+                    </button>
+                </div>
+                <button onclick="openUnifiedMap()" class="w-full mt-4 bg-primary/10 text-primary border-2 border-primary rounded-xl font-bold py-3 hover:bg-primary hover:text-white transition">
+                    <i class="fas fa-map-marked-alt ml-2"></i> عرض جميع العقارات على الخريطة
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم العقارات -->
+    <section id="listings" class="container mx-auto px-4 py-16">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-2xl md:text-3xl font-black text-darkNavy" id="sectionTitle">أحدث الأراضي الزراعية</h3>
+            <span class="bg-emerald-50 text-primary px-4 py-2 rounded-full text-sm font-bold" id="resultsCount">جاري التحميل...</span>
+        </div>
+        <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- قسم الأخبار -->
+    <section id="market-news" class="bg-bgLight py-16 border-y">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-black text-darkNavy">أخبار السوق العقاري</h3>
+                <p class="text-slate-500 mt-2">تحديثات دورية من مصادر موثوقة</p>
+            </div>
+            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- الخدمات -->
+    <section id="services" class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl font-black text-darkNavy">خدماتنا</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-bgLight p-6 rounded-2xl border hover:border-primary/30 transition">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <h4 class="font-bold text-darkNavy mb-2">استخراج رخص البناء</h4>
+                    <p class="text-sm text-slate-500">متابعة وتصاريح البناء</p>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border hover:border-primary/30 transition">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-hard-hat"></i>
+                    </div>
+                    <h4 class="font-bold text-darkNavy mb-2">المقاولات</h4>
+                    <p class="text-sm text-slate-500">بناء وتشطيب متكامل</p>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border hover:border-primary/30 transition">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h4 class="font-bold text-darkNavy mb-2">حفر الآبار</h4>
+                    <p class="text-sm text-slate-500">كشف وحفر الآبار</p>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border hover:border-primary/30 transition">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4">
+                        <i class="fas fa-building-user"></i>
+                    </div>
+                    <h4 class="font-bold text-darkNavy mb-2">إدارة الأملاك</h4>
+                    <p class="text-sm text-slate-500">تحصيل وصيانة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer class="bg-darkNavy text-slate-400 py-8 text-center">
+        <p>©️ 2026 آفاق الإنجاز العقاري. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <!-- الأزرار العائمة -->
+    <div class="fixed bottom-6 left-6 z-50 flex flex-col gap-4">
+        <a href="tel:+966545888931" class="w-14 h-14 bg-darkNavy text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+            <i class="fas fa-phone text-xl"></i>
+        </a>
+        <a href="https://wa.me/966545888931" target="_blank" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition">
+            <i class="fab fa-whatsapp text-2xl"></i>
+        </a>
+    </div>
+
+    <!-- المساعد الذكي -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <i class="fas fa-robot ml-2"></i>
+                المساعد الذكي
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    مرحباً! أنا المساعد الذكي لآفاق الإنجاز العقاري. كيف يمكنني مساعدتك؟
+                </div>
+            </div>
+            <div class="ai-chat-input">
+                <input type="text" id="aiChatInput" placeholder="اكتب سؤالك هنا..." onkeypress="handleChatKeypress(event)">
+                <button onclick="sendAiMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div class="ai-chat-button" onclick="toggleAiChat()">
+            <i class="fas fa-robot text-2xl"></i>
+        </div>
+    </div>
+
+    <!-- نافذة الخريطة الموحدة -->
+    <div id="unifiedMapModal" class="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-6xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h3 class="text-xl font-bold">خريطة جميع العقارات</h3>
+                <button onclick="closeUnifiedMap()" class="text-slate-400 hover:text-red-500 text-2xl">&times;</button>
+            </div>
+            <div id="unifiedMapContainer"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let currentCategory = 'agricultural';
+        let allProperties = [];
+        let allArticles = [];
+        let unifiedMapInstance = null;
+
+        // جلب البيانات
+        async function fetchData() {
+            try {
+                const response = await fetch('/api/data');
+                const data = await response.json();
+                allProperties = data.properties || [];
+                allArticles = data.articles || [];
+                renderProperties();
+                renderArticles();
+            } catch (error) {
+                console.error('خطأ في جلب البيانات:', error);
+            }
+        }
+
+        // عرض العقارات
+        function renderProperties(filteredData) {
+            const grid = document.getElementById('propertiesGrid');
+            const dataToRender = filteredData || allProperties.filter(p => p.category === currentCategory);
+            
+            grid.innerHTML = '';
+            document.getElementById('resultsCount').textContent = dataToRender.length + ' عقار';
+
+            dataToRender.forEach(prop => {
+                const categoryLabel = {
+                    'agricultural': 'أرض زراعية',
+                    'residential': 'أرض سكنية',
+                    'resorts': 'استراحة'
+                }[prop.category];
+
+                const card = `
+                    <div class="bg-white rounded-2xl shadow overflow-hidden border property-card">
+                        <div class="relative h-56">
+                            <img src="${prop.image}" alt="${prop.title}" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                                ${categoryLabel}
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h4 class="text-xl font-black mb-2">${prop.title}</h4>
+                            <p class="text-slate-500 text-sm mb-3"><i class="fas fa-map-marker-alt text-primary ml-1"></i> ${prop.location}</p>
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="bg-emerald-50 text-primary px-3 py-1 rounded-lg text-sm font-bold">
+                                    <i class="fas fa-ruler-combined ml-1"></i> ${prop.area}
+                                </span>
+                            </div>
+                            <div class="flex items-center justify-between border-t pt-4">
+                                <span class="text-primary font-black text-lg">${prop.price.toLocaleString()} ر.س</span>
+                                <div class="flex gap-2">
+                                    <button onclick="openMap(${prop.lat}, ${prop.lng}, '${prop.title}')" class="bg-slate-100 px-3 py-2 rounded-xl font-bold text-sm hover:bg-slate-200">
+                                        <i class="fas fa-map"></i>
+                                    </button>
+                                    <a href="${prop.whatsappLink}" target="_blank" class="bg-primary text-white px-4 py-2 rounded-xl font-bold text-sm hover:bg-primaryDark">
+                                        <i class="fab fa-whatsapp ml-1"></i> استفسر
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // عرض المقالات
+        function renderArticles() {
+            const grid = document.getElementById('articlesGrid');
+            grid.innerHTML = '';
+            
+            allArticles.slice(0, 6).forEach(article => {
+                const card = `
+                    <div class="bg-white rounded-2xl shadow p-6 border">
+                        <span class="text-xs font-bold px-3 py-1 rounded-full ${article.category === 'سوق الأسهم' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-primary'}">
+                            ${article.category}
+                        </span>
+                        <h4 class="text-lg font-bold mt-3 mb-2">${article.title}</h4>
+                        <p class="text-slate-500 text-sm mb-4">${article.summary}</p>
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span><i class="far fa-calendar ml-1"></i> ${article.date}</span>
+                            <span><i class="fas fa-shield-alt text-primary ml-1"></i> ${article.source}</span>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+        }
+
+        // الفلاتر
+        function switchCategory(category) {
+            currentCategory = category;
+            do
