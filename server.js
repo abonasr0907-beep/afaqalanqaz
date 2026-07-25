@@ -1,84 +1,161 @@
 require('dotenv').config();
+const express = require('express');
 const mongoose = require('mongoose');
-const Property = require('./models/Property');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const path = require('path');
 
-const properties = [
-  // أراضي زراعية (10)
-  {
-    title: "أرض زراعية 5000م مع نخيل مثمر - الهياثم",
-    description: "أرض زراعية خصبة مع نخيل مثمر، بئر ارتوازي، موقع ممتاز قريب من الطريق الرئيسي",
-    category: "agricultural",
-    location: "الخرج - الهياثم",
-    price: 850000,
-    area: "5,000 م²",
-    features: ["صك إلكتروني", "نخيل مثمر", "بئر ارتوازي", "كهرباء", "طريق معبد"],
-    coordinates: { lat: 24.2100, lng: 47.2800 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بأرض%20الهياثم%205000م",
-    status: "active",
-    isFeatured: true
-  },
-  {
-    title: "مزرعة 10000م كاملة الخدمات - الرحمانية",
-    description: "مزرعة واسعة كاملة الخدمات، صك جاهز، مناسبة للاستثمار الزراعي",
-    category: "agricultural",
-    location: "الخرج - مخطط الرحمانية",
-    price: 1350000,
-    area: "10,000 م²",
-    features: ["صك", "ماء", "كهرباء", "طريق معبد", "مستودع"],
-    coordinates: { lat: 24.1547, lng: 47.3111 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بمزرعة%20الرحمانية%2010000م",
-    status: "active"
-  },
-  {
-    title: "أرض زراعية 3000م على طريق الدلم",
-    description: "أرض زراعية بموقع استراتيجي على الطريق الرئيسي، مناسبة للزراعة والاستثمار",
-    category: "agricultural",
-    location: "الخرج - الدلم",
-    price: 620000,
-    area: "3,000 م²",
-    features: ["صك", "طريق رئيسي", "كهرباء قريبة", "أرض مستوية"],
-    coordinates: { lat: 24.0500, lng: 46.9800 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بأرض%20الدلم%203000م",
-    status: "active"
-  },
-  {
-    title: "قطعة زراعية 7000م مع بئر - العرجاء",
-    description: "قطعة زراعية مميزة مع بئر ماء، تربة خصبة، مناسبة للزراعة الموسمية",
-    category: "agricultural",
-    location: "الخرج - العرجاء",
-    price: 980000,
-    area: "7,000 م²",
-    features: ["صك إلكتروني", "بئر ماء", "تربة خصبة", "سور"],
-    coordinates: { lat: 24.1200, lng: 47.2500 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بأرض%20العرجاء%207000م",
-    status: "active"
-  },
-  {
-    title: "مزرعة نخيل 15000م - الهياثم",
-    description: "مزرعة نخيل كبيرة مع 200 نخلة مثمرة، بئر ارتوازي، مبنى زراعي",
-    category: "agricultural",
-    location: "الخرج - الهياثم",
-    price: 2100000,
-    area: "15,000 م²",
-    features: ["200 نخلة مثمرة", "بئر ارتوازي", "مبنى زراعي", "صك", "كهرباء"],
-    coordinates: { lat: 24.2150, lng: 47.2850 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بمزرعة%20النخيل%2015000م",
-    status: "active",
-    isFeatured: true
-  },
-  {
-    title: "أرض زراعية 4000م قريبة من الخدمات",
-    description: "أرض زراعية بموقع ممتاز قريب من جميع الخدمات والمرافق",
-    category: "agricultural",
-    location: "الخرج - الرحمانية",
-    price: 720000,
-    area: "4,000 م²",
-    features: ["صك", "قريبة من الخدمات", "ماء", "كهرباء"],
-    coordinates: { lat: 24.1560, lng: 47.3120 },
-    whatsappLink: "https://wa.me/966545888931?text=أهتم%20بأرض%20الرحمانية%204000م",
-    status: "active"
-  },
-  {
-    title: "مزرعة صغيرة 2000م للمبتدئين",
-    description: "مزرعة صغيرة مثالية للمبتدئين في الزراعة، كاملة الخدمات",
-    category: "agricultural",
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(cors());
+app.use(compression());
+app.use(morgan('combined'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+});
+app.use('/api/', limiter);
+
+// Health Check
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'الخادم يعمل بنجاح',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => {
+  console.log('✅ تم الاتصال بقاعدة البيانات');
+  
+  // Import Property model after connection
+  const Property = require('./models/Property');
+  
+  // API Routes
+  app.get('/api/properties', async (req, res) => {
+    try {
+      const { category, status = 'active' } = req.query;
+      const filter = { status };
+      if (category) filter.category = category;
+      
+      const properties = await Property.find(filter).sort({ createdAt: -1 });
+      res.json({ success: true, data: properties, count: properties.length });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.get('/api/properties/:id', async (req, res) => {
+    try {
+      const property = await Property.findById(req.params.id);
+      if (!property) {
+        return res.status(404).json({ success: false, error: 'العقار غير موجود' });
+      }
+      property.views += 1;
+      await property.save();
+      res.json({ success: true, data: property });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  app.post('/api/properties', async (req, res) => {
+    try {
+      const property = new Property(req.body);
+      await property.save();
+      res.status(201).json({ success: true, data: property });
+    } catch (error) {
+      res.status(400).json({ success: false, error: error.message });
+    }
+  });
+
+  app.put('/api/properties/:id', async (req, res) => {
+    try {
+      const property = await Property.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
+      if (!property) {
+        return res.status(404).json({ success: false, error: 'العقار غير موجود' });
+      }
+      res.json({ success: true, data: property });
+    } catch (error) {
+      res.status(400).json({ success: false, error: error.message });
+    }
+  });
+
+  app.delete('/api/properties/:id', async (req, res) => {
+    try {
+      const property = await Property.findByIdAndDelete(req.params.id);
+      if (!property) {
+        return res.status(404).json({ success: false, error: 'العقار غير موجود' });
+      }
+      res.json({ success: true, message: 'تم الحذف بنجاح' });
+    } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+    }
+  });
+
+  // Serve HTML pages
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
+
+  app.get('/properties', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'properties.html'));
+  });
+
+  app.get('/services', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'services.html'));
+  });
+
+  app.get('/news', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'news.html'));
+  });
+
+  app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+  });
+
+  // Start server AFTER routes are defined
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 الخادم يعمل على المنفذ ${PORT}`);
+    console.log(`🌐 الموقع: http://localhost:${PORT}`);
+    
+    // Start bot in background
+    try {
+      const SmartBot = require('./bot');
+      const bot = new SmartBot();
+      console.log('🤖 البوت يعمل الآن...');
+    } catch (error) {
+      console.error('⚠️ خطأ في تشغيل البوت:', error.message);
+    }
+  });
+
+})
+.catch(err => {
+  console.error('❌ خطأ في الاتصال بقاعدة البيانات:', err.message);
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err.message);
+});
