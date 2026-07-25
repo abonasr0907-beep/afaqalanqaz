@@ -1,120 +1,140 @@
-const sharp = require('sharp');
-const fs = require('fs').promises;
+require('dotenv').config();
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
+const Property = require('./models/Property');
 
-class ImageProcessor {
-  constructor() {
-    this.uploadDir = path.join(__dirname, '../public/uploads');
-    this.optimizedDir = path.join(__dirname, '../public/uploads/optimized');
-    this.aiEnhancedDir = path.join(__dirname, '../public/uploads/ai-enhanced');
-    this.thumbnailsDir = path.join(__dirname, '../public/uploads/thumbnails');
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(helmet());
+app.use(cors());
+app.use(compression());
+app.use(morgan('combined'));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW) * 60 * 1000,
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS)
+});
+app.use('/api/', limiter);
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ تم الاتصال بقاعدة البيانات'))
+.catch(err => console.error('❌ خطأ في الاتصال:', err));
+
+// API Routes
+app.get('/api/properties', async (req, res) => {
+  try {
+    const { category, status = 'active' } = req.query;
+    const filter = { status };
+    if (category) filter.category = category;
     
-    this.ensureDirectories();
+    const properties = await Property.find(filter).sort({ createdAt: -1 });
+    res.json({ success: true, data: properties, count: properties.length });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
+});
 
-  async ensureDirectories() {
-    await fs.mkdir(this.uploadDir, { recursive: true });
-    await fs.mkdir(this.optimizedDir, { recursive: true });
-    await fs.mkdir(this.aiEnhancedDir, { recursive: true });
-    await fs.mkdir(this.thumbnailsDir, { recursive: true });
-  }
-
-  async processImage(fileBuffer, originalName, options = {}) {
-    const fileName = `${uuidv4()}_${Date.now()}`;
-    const ext = path.extname(originalName) || '.jpg';
-    
-    const paths = {
-      original: path.join(this.uploadDir, `${fileName}_original${ext}`),
-      optimized: path.join(this.optimizedDir, `${fileName}_optimized.jpg`),
-      thumbnail: path.join(this.thumbnailsDir, `${fileName}_thumb.jpg`),
-      large: path.join(this.optimizedDir, `${fileName}_large.jpg`)
-    };
-
-    try {
-      // حفظ الصورة الأصلية
-      await fs.writeFile(paths.original, fileBuffer);
-
-      // تحسين الصورة
-      const image = sharp(fileBuffer);
-      const metadata = await image.metadata();
-
-      // إنشاء نسخة محسنة
-      await image
-        .rotate()
-        .resize(1920, 1080, {
-          fit: 'inside',
-          withoutEnlargement: true
-        })
-        .flatten({ background: { r: 255, g: 255, b: 255 } })
-        .jpeg({
-          quality: options.quality || 85,
-          progressive: true,
-          mozjpeg: true
-        })
-        .toFile(paths.optimized);
-
-      // إنشاء صورة مصغرة
-      await sharp(fileBuffer)
-        .resize(400, 300, { fit: 'cover' })
-        .jpeg({ quality: 75 })
-        .toFile(paths.thumbnail);
-
-      // إنشاء نسخة كبيرة
-      await sharp(fileBuffer)
-        .resize(1200, 800, { fit: 'inside' })
-        .jpeg({ quality: 90 })
-        .toFile(paths.large);
-
-      // الحصول على المعلومات
-      const stats = await fs.stat(paths.optimized);
-
-      return {
-        success: true,
-        paths: paths,
-        metadata: {
-          width: metadata.width,
-          height: metadata.height,
-          size: stats.size,
-          sizeKB: (stats.size / 1024).toFixed(2),
-          format: metadata.format
-        }
-      };
-
-    } catch (error) {
-      console.error('خطأ في معالجة الصورة:', error);
-      return { success: false, error: error.message };
+app.get('/api/properties/:id', async (req, res) => {
+  try {
+    const property = await Property.findById(req.params.id);
+    if (!property) {
+      return res.status(404).json({ success: false, error: 'العقار غير موجود' });
     }
+    property.views += 1;
+    await property.save();
+    res.json({ success: true, data: property });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
   }
+});
 
-  async enhanceWithAI(imagePath, propertyType) {
-    try {
-      const fileName = path.basename(imagePath, path.extname(imagePath));
-      const outputPath = path.join(this.aiEnhancedDir, `${fileName}_ai.jpg`);
+app.post('/api/properties', async (req, res) => {
+  try {
+    const property = new Property(req.body);
+    await property.save();
+    res.status(201).json({ success: true, data: property });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+});
 
-      const enhancements = {
-        agricultural: { saturation: 1.2, brightness: 1.05 },
-        residential: { saturation: 1.0, brightness: 1.1 },
-        resorts: { saturation: 1.15, brightness: 1.08 }
-      };
-
-      const settings = enhancements[propertyType] || enhancements.residential;
-
-      await sharp(imagePath)
-        .modulate({
-          brightness: settings.brightness,
-          saturation: settings.saturation
-        })
-        .sharpen()
-        .jpeg({ quality: 90, progressive: true })
-        .toFile(outputPath);
-
-      return outputPath;
-    } catch (error) {
-      console.error('خطأ في التحسين بالAI:', error);
-      return imagePath;
+app.put('/api/properties/:id', async (req, res) => {
+  try {
+    const property = await Property.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!property) {
+      return res.status(404).json({ success: false, error: 'العقار غير موجود' });
     }
+    res.json({ success: true, data: property });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
   }
-}
+});
 
-module.exports = new ImageProcessor();
+app.delete('/api/properties/:id', async (req, res) => {
+  try {
+    const property = await Property.findByIdAndDelete(req.params.id);
+    if (!property) {
+      return res.status(404).json({ success: false, error: 'العقار غير موجود' });
+    }
+    res.json({ success: true, message: 'تم الحذف بنجاح' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    message: 'الخادم يعمل بنجاح',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Serve HTML pages
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/properties', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'properties.html'));
+});
+
+app.get('/services', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'services.html'));
+});
+
+app.get('/news', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'news.html'));
+});
+
+app.get('/contact', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'contact.html'));
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`🚀 الخادم يعمل على المنفذ ${PORT}`);
+  console.log(` الموقع: http://localhost:${PORT}`);
+  
+  // Import and start bot
+  require('./bot');
+});
