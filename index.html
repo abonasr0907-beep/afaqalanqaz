@@ -8,13 +8,12 @@
     <meta name="keywords" content="آفاق الإنجاز العقاري, أراضي زراعية الخرج, استراحات, عقارات الرياض, مخطط الرحمانية, الهياثم, الدلم, العرجاء">
     <title>آفاق الإنجاز العقاري | أراضي زراعية وسكنية واستراحات بالرياض والخرج</title>
     
-    <!-- Fonts & Libraries -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     
     <script>
         tailwind.config = {
@@ -22,7 +21,7 @@
                 extend: {
                     colors: { primary: '#00A651', primaryDark: '#008f45', darkNavy: '#0F172A', bgLight: '#F8FAFC' },
                     fontFamily: { tajawal: ['Tajawal', 'sans-serif'] },
-                    boxShadow: { 'bayut': '0 4px 20px rgba(0, 0, 0, 0.06)', 'bayut-hover': '0 12px 30px rgba(0, 166, 81, 0.15)' }
+                    boxShadow: { 'bayut': '0 4px 20px rgba(0, 0, 0, 0.06)' }
                 }
             }
         }
@@ -31,7 +30,11 @@
     <style>
         * { font-family: 'Tajawal', sans-serif; }
         body { background-color: #F8FAFC; color: #0F172A; }
-        .hero-bg { background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80'); background-size: cover; background-position: center; min-height: 55vh; }
+        .hero-bg {
+            background: linear-gradient(rgba(15, 23, 42, 0.65), rgba(15, 23, 42, 0.75)),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
+            background-size: cover; background-position: center; min-height: 55vh;
+        }
         .search-tabs .tab-btn { transition: all 0.3s ease; border-bottom: 3px solid transparent; }
         .search-tabs .tab-btn.active { color: #00A651; border-bottom-color: #00A651; font-weight: 800; }
         .property-card, .article-card { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -41,12 +44,15 @@
         ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #F8FAFC; } ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 4px; } ::-webkit-scrollbar-thumb:hover { background: #00A651; }
         .loader { border: 4px solid #f3f3f3; border-top: 4px solid #00A651; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        #mapContainer { height: 400px; width: 100%; border-radius: 12px; z-index: 1; }
+        #mapContainer, #unifiedMapContainer { height: 400px; width: 100%; border-radius: 12px; z-index: 1; }
+        #unifiedMapContainer { height: 600px; }
+        .custom-popup .leaflet-popup-content-wrapper { border-radius: 12px; }
+        .custom-popup .leaflet-popup-content { margin: 0; font-family: 'Tajawal', sans-serif; }
     </style>
 </head>
 <body class="antialiased relative">
 
-    <!-- 1. الهيدر العلوي -->
+    <!-- ===== الهيدر ===== -->
     <header class="glass-header sticky top-0 z-40 py-3">
         <div class="container mx-auto px-4 flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -61,6 +67,7 @@
                 <a href="#listings" class="hover:text-primary transition">العقارات</a>
                 <a href="#market-news" class="hover:text-primary transition">أخبار السوق</a>
                 <a href="#list-your-property" class="hover:text-primary transition">اعرض عقارك</a>
+                <a href="#services" class="hover:text-primary transition">خدماتنا</a>
             </nav>
             <div class="flex items-center gap-3">
                 <a href="https://t.me/afaqalanqaz" target="_blank" class="hidden sm:flex items-center gap-2 bg-sky-500 text-white px-4 py-2.5 rounded-xl font-bold text-sm hover:bg-sky-600 transition shadow-md"><i class="fab fa-telegram-plane text-lg"></i> تليجرام</a>
@@ -69,7 +76,7 @@
         </div>
     </header>
 
-    <!-- 2. شريط البحث الرئيسي -->
+    <!-- ===== شريط البحث ===== -->
     <section id="home" class="hero-bg relative flex items-center justify-center px-4">
         <div class="container mx-auto max-w-5xl pt-10 pb-16">
             <div class="text-center mb-8">
@@ -108,11 +115,17 @@
                     <button onclick="applyFilters()" class="bg-darkNavy text-white rounded-xl font-bold py-3 px-6 hover:bg-slate-800 transition flex items-center justify-center gap-2"><i class="fas fa-search"></i> بحث</button>
                     <button onclick="resetFilters()" class="bg-slate-100 text-slate-600 rounded-xl font-bold py-3 px-6 hover:bg-slate-200 transition flex items-center justify-center gap-2"><i class="fas fa-redo"></i> إعادة ضبط</button>
                 </div>
+                <!-- زر الخريطة الموحدة الجديد -->
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                    <button onclick="openUnifiedMap()" class="w-full bg-primary/10 text-primary border-2 border-primary/30 rounded-xl font-bold py-3 px-6 hover:bg-primary hover:text-white transition flex items-center justify-center gap-2">
+                        <i class="fas fa-map-marked-alt text-xl"></i> عرض جميع العقارات على الخريطة الموحدة
+                    </button>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- 3. قسم العروض العقارية -->
+    <!-- ===== قسم العقارات ===== -->
     <section id="listings" class="container mx-auto px-4 py-16">
         <div class="flex items-center justify-between mb-8">
             <div>
@@ -125,21 +138,19 @@
         <div id="propertiesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </section>
 
-    <!-- 4. قسم أخبار السوق العقاري (الجديد) -->
+    <!-- ===== قسم الأخبار ===== -->
     <section id="market-news" class="bg-bgLight py-16 border-y border-slate-100">
         <div class="container mx-auto px-4">
             <div class="text-center mb-10">
                 <span class="text-primary font-bold text-sm tracking-wider uppercase">تحديثات دورية</span>
                 <h3 class="text-3xl font-black text-darkNavy mt-2">أخبار السوق العقاري وتداولات الأسهم</h3>
-                <p class="text-slate-500 mt-2">مقالات وتحليلات مستوحاة من مصادر معتمدة (أرقام، مباشر، الهيئة العامة للعقار)</p>
+                <p class="text-slate-500 mt-2">مقالات وتحليلات مستوحاة من مصادر معتمدة</p>
             </div>
-            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- سيتم ملؤها ديناميكياً -->
-            </div>
+            <div id="articlesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
         </div>
     </section>
 
-    <!-- 5. قسم اعرض عقارك معنا -->
+    <!-- ===== اعرض عقارك ===== -->
     <section id="list-your-property" class="bg-darkNavy py-16 relative overflow-hidden">
         <div class="container mx-auto px-4 relative z-10">
             <div class="max-w-3xl mx-auto text-center mb-10">
@@ -158,15 +169,49 @@
                     </select>
                     <input type="text" id="propLocation" placeholder="موقع العقار (الحي / المخطط)" required class="bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary">
                     <textarea id="propDetails" placeholder="تفاصيل إضافية (المساحة، السعر المتوقع، المميزات)" rows="2" class="md:col-span-2 bg-white/90 border-0 rounded-xl px-4 py-3 text-darkNavy font-bold focus:ring-2 focus:ring-primary"></textarea>
-                    <button type="submit" class="md:col-span-2 bg-primary text-white font-black py-4 rounded-xl hover:bg-primaryDark transition flex items-center justify-center gap-2 text-lg shadow-lg">
-                        <i class="fas fa-paper-plane"></i> إرسال طلب التقييم والعرض
-                    </button>
+                    <button type="submit" class="md:col-span-2 bg-primary text-white font-black py-4 rounded-xl hover:bg-primaryDark transition flex items-center justify-center gap-2 text-lg shadow-lg"><i class="fas fa-paper-plane"></i> إرسال طلب التقييم والعرض</button>
                 </form>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== الخدمات ===== -->
+    <section id="services" class="bg-white py-16 border-y border-slate-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-primary font-bold text-sm tracking-wider uppercase">خدمات متكاملة</span>
+                <h3 class="text-3xl font-black text-darkNavy mt-2">خدمات ما بعد البيع وإدارة الأملاك</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition"><i class="fas fa-file-signature"></i></div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">استخراج رخص البناء</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">متابعة وتخليص إجلاء وتصاريح البناء الرسمية بكفاءة.</p>
+                    <button onclick="requestService('استخراج رخص البناء')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">طلب الخدمة <i class="fas fa-arrow-left"></i></button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition"><i class="fas fa-hard-hat"></i></div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">المقاولات والتشطيب</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">بناء وتأهيل معماري متكامل، استلام عظم أو مفتاح.</p>
+                    <button onclick="requestService('المقاولات والتشطيب')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">طلب الخدمة <i class="fas fa-arrow-left"></i></button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition"><i class="fas fa-water"></i></div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">حفر وتحديد الآبار</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">كشف وتحديد التجمعات المائية الجوفية وحفر الآبار.</p>
+                    <button onclick="requestService('حفر وتحديد الآبار')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">طلب الخدمة <i class="fas fa-arrow-left"></i></button>
+                </div>
+                <div class="bg-bgLight p-6 rounded-2xl border border-slate-100 hover:border-primary/30 transition group">
+                    <div class="w-14 h-14 bg-emerald-100 text-primary rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:bg-primary group-hover:text-white transition"><i class="fas fa-building-user"></i></div>
+                    <h4 class="text-lg font-bold text-darkNavy mb-2">إدارة الأملاك</h4>
+                    <p class="text-sm text-slate-500 mb-4 leading-relaxed">تحصيل الإيجارات، صيانة المجمعات، وإدارة المزارع.</p>
+                    <button onclick="requestService('إدارة الأملاك')" class="text-primary font-bold text-sm flex items-center gap-2 hover:gap-3 transition-all">طلب الخدمة <i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== الفوتر ===== -->
     <footer class="bg-darkNavy text-slate-400 py-8 text-center text-sm">
         <div class="container mx-auto px-4">
             <p>©️ 2026 مكتب آفاق الإنجاز العقاري. جميع الحقوق محفوظة.</p>
@@ -174,13 +219,13 @@
         </div>
     </footer>
 
-    <!-- الأزرار العائمة للتواصل -->
+    <!-- ===== الأزرار العائمة ===== -->
     <div class="fixed bottom-6 left-6 z-50 flex flex-col gap-4">
         <a href="tel:+966545888931" class="w-14 h-14 bg-darkNavy text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition transform duration-300 border-2 border-white" title="اتصل بنا"><i class="fas fa-phone text-xl"></i></a>
-        <a href="https://wa.me/966545888931?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20العروض%20العقارية" target="_blank" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition transform duration-300 border-2 border-white" title="تواصل عبر واتساب"><i class="fab fa-whatsapp text-2xl"></i></a>
+        <a href="https://wa.me/966545888931?text=السلام%20عليكم،%20أود%20الاستفسار%20عن%20العروض%20العقارية" target="_blank" class="w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition transform duration-300 border-2 border-white" title="واتساب"><i class="fab fa-whatsapp text-2xl"></i></a>
     </div>
 
-    <!-- نافذة منبثقة للخريطة -->
+    <!-- ===== نافذة الخريطة الفردية ===== -->
     <div id="mapModal" class="fixed inset-0 z-[60] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-3xl overflow-hidden shadow-2xl">
             <div class="flex justify-between items-center p-4 border-b border-slate-100">
@@ -194,83 +239,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- كود JavaScript المتكامل -->
-    <!-- ========================================== -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script>
-        let currentCategory = 'agricultural';
-        let allProperties = [];
-        let allArticles = [];
-        let mapInstance = null;
-
-        async function fetchData() {
-            document.getElementById('loadingSpinner').style.display = 'block';
-            try {
-                const response = await fetch('/data.json');
-                if (!response.ok) throw new Error("فشل جلب البيانات");
-                const data = await response.json();
-                allProperties = data.properties || [];
-                allArticles = data.articles || [];
-                
-                renderProperties();
-                renderArticles();
-            } catch (error) {
-                console.warn("جاري استخدام بيانات تجريبية.", error);
-                // بيانات تجريبية للمقالات
-                allArticles = [
-                    {
-                        id: 1,
-                        title: "قطاع العقار يتصدر مكاسب تداولات اليوم بدعم من أرباح الشركات",
-                        summary: "أغلق المؤشر العام للسوق السعودي على ارتفاع، بقيادة أسهم القطاع العقاري والبنوك، وسط توقعات بموسم إقفال قوي للربع الحالي.",
-                        date: "2026-07-24",
-                        source: "أرقام",
-                        link: "https://www.argaam.com",
-                        category: "سوق الأسهم"
-                    },
-                    {
-                        id: 2,
-                        title: "نمو الطلب على الأراضي الزراعية في منطقة الخرج بنسبة 15%",
-                        summary: "كشفت تقارير الهيئة العامة للعقار عن زيادة ملحوظة في طلبات الإفراغ للأراضي الزراعية في محافظات الخرج والدلم، مدفوعة بمشاريع الأمن الغذائي.",
-                        date: "2026-07-22",
-                        source: "العقارية",
-                        link: "https://realestate.gov.sa",
-                        category: "سوق عقاري"
-                    }
-                ];
-                renderProperties();
-                renderArticles();
-            } finally {
-                document.getElementById('loadingSpinner').style.display = 'none';
-            }
-        }
-
-        function renderProperties(filteredData = null) {
-            const grid = document.getElementById('propertiesGrid');
-            const dataToRender = filteredData || allProperties;
-            document.getElementById('resultsCount').textContent = `متاح حالياً: ${dataToRender.length} عقار`;
-            grid.innerHTML = '';
-
-            if (dataToRender.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-500 bg-white rounded-2xl">لا توجد عقارات مطابقة لبحثك حالياً.</div>`;
-                return;
-            }
-
-            dataToRender.forEach(prop => {
-                const categoryLabel = prop.category === 'agricultural' ? 'أرض زراعية' : prop.category === 'residential' ? 'أرض سكنية' : 'استراحة / شاليه';
-                const featuresHtml = prop.features ? prop.features.map(f => `<span class="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-md">${f}</span>`).join('') : '';
-
-                grid.innerHTML += `
-                    <div class="bg-white rounded-2xl shadow-bayut overflow-hidden border border-slate-100 property-card flex flex-col h-full">
-                        <div class="relative h-56 bg-slate-200">
-                            <img src="${prop.image}" alt="${prop.title}" class="w-full h-full object-cover" loading="lazy">
-                            <span class="absolute top-4 right-4 bg-primary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow">${categoryLabel}</span>
-                        </div>
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h4 class="text-xl font-black text-darkNavy mb-2 line-clamp-2">${prop.title}</h4>
-                            <p class="text-slate-500 text-sm mb-3 flex items-center gap-2"><i class="fas fa-map-marker-alt text-primary"></i> ${prop.location}</p>
-                            <div class="flex items-center gap-2 mb-4 text-sm text-slate-600 font-bold">
-                                <span class="bg-emerald-50 text-primary px-3 py-1 rounded-lg border border-emerald-100"><i class="fas fa-ruler-combined ml-1"></i> ${prop.area || 'غير محدد'}</span>
-                            </div>
-                            <div class="flex flex-wrap gap-2 mb-4">${featuresHtml}</div>
-                            <div class="mt-auto flex items-center justify-between border-t border-slate-100 pt-4 gap-2">
+    <!-- ===== نافذة الخريطة الموحدة الجديدة ===== -->
+    <div id="unifiedMapModal" class="fixed inset-0 z-[70] hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-6xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center p-4 border-b border-slate-100 bg-white">
