@@ -7,6 +7,7 @@ const compression = require('compression');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const Property = require('./models/Property');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -41,11 +42,16 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-.then(() => {
+.then(async () => {
   console.log('✅ تم الاتصال بقاعدة البيانات');
   
-  // Import Property model after connection
-  const Property = require('./models/Property');
+  // Auto-seed if empty
+  const count = await Property.countDocuments();
+  if (count === 0) {
+    console.log('📦 قاعدة البيانات فارغة - يمكن تشغيل npm run seed');
+  } else {
+    console.log(`💾 قاعدة البيانات تحتوي على ${count} عقار`);
+  }
   
   // API Routes
   app.get('/api/properties', async (req, res) => {
@@ -127,35 +133,3 @@ mongoose.connect(process.env.MONGODB_URI, {
   });
 
   app.get('/news', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'news.html'));
-  });
-
-  app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'contact.html'));
-  });
-
-  // Start server AFTER routes are defined
-  app.listen(PORT, '0.0.0.0', () => {
-    console.log(`🚀 الخادم يعمل على المنفذ ${PORT}`);
-    console.log(`🌐 الموقع: http://localhost:${PORT}`);
-    
-    // Start bot in background
-    try {
-      const SmartBot = require('./bot');
-      const bot = new SmartBot();
-      console.log('🤖 البوت يعمل الآن...');
-    } catch (error) {
-      console.error('⚠️ خطأ في تشغيل البوت:', error.message);
-    }
-  });
-
-})
-.catch(err => {
-  console.error('❌ خطأ في الاتصال بقاعدة البيانات:', err.message);
-  process.exit(1);
-});
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('Unhandled Rejection:', err.message);
-});
