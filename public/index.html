@@ -3,62 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آفاق الإنجاز العقاري</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #f5f5f5; padding: 20px; }
-        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center; margin-bottom: 30px; }
-        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .tab { background: white; padding: 15px 25px; border-radius: 10px; cursor: pointer; font-weight: bold; border: 2px solid #ddd; transition: all 0.3s; }
-        .tab:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .tab.active { background: #667eea; color: white; border-color: #667eea; }
-        .properties { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .property { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
-        .property h3 { color: #333; margin-bottom: 15px; font-size: 1.3rem; }
-        .property p { color: #666; margin-bottom: 10px; }
-        .price { color: #667eea; font-size: 1.8rem; font-weight: bold; margin: 15px 0; }
-        .btn { display: inline-block; background: #25d366; color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; }
-        .loading { text-align: center; padding: 50px; color: #666; font-size: 1.2rem; }
-        .services { background: white; padding: 40px; border-radius: 15px; margin: 40px 0; }
-        .services h2 { color: #667eea; margin-bottom: 30px; text-align: center; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .service { padding: 25px; border: 2px solid #eee; border-radius: 10px; text-align: center; transition: all 0.3s; }
-        .service:hover { border-color: #667eea; transform: translateY(-5px); }
-        .service i { font-size: 3rem; color: #667eea; margin-bottom: 15px; }
-        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 5px 20px rgba(0,0,0,0.3); text-decoration: none; }
-    </style>
+    <title>آفاق الإنجاز العقاري | فخامة الاستثمار العقاري</title>
+    <meta name="description" content="مكتب آفاق الإنجاز العقاري - خبرة 20 عاماً">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div class="header">
-        <h1> آفاق الإنجاز العقاري</h1>
-        <p>خبرة 20 عاماً في السوق العقاري السعودي</p>
-        <p>📞 966545888931+</p>
-    </div>
+    <style>
+        :root {
+            --gold: #C9A961;
+            --gold-dark: #8B6F47;
+            --gold-light: #E5D5A8;
+            --charcoal: #1C1C1C;
+            --charcoal-light: #2C2C2C;
+            --cream: #F5F1E8;
+            --cream-dark: #E8E0D0;
+            --bronze: #8B7355;
+            --white: #FFFFFF;
+        }
 
-    <div class="tabs">
-        <div class="tab active" onclick="loadProperties('agricultural')">🌾 الأراضي الزراعية</div>
-        <div class="tab" onclick="loadProperties('residential')">🏠 الأراضي السكنية</div>
-        <div class="tab" onclick="loadProperties('resorts')">🏖️ الاستراحات</div>
-    </div>
+        * { 
+            font-family: 'Tajawal', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
 
-    <div id="properties" class="properties">
-        <div class="loading">🔄 جاري تحميل العقارات...</div>
-    </div>
+        body { 
+            background-color: var(--cream); 
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
 
-    <div class="services">
-        <h2>🛠️ خدمات ما بعد البيع</h2>
-        <div class="services-grid">
-            <div class="service">
-                <i class="fas fa-building"></i>
-                <h3>إدارة الأملاك</h3>
-                <p>تحصيل الإيجارات والصيانة</p>
-            </div>
-            <div class="service">
-                <i class="fas fa-hard-hat"></i>
-                <h3>المقاولة</h3>
-                <p>بناء وتشطيب متكامل</p>
-            </div>
-            <div class="service">
-                <i class="fas fa-file-signature"></i>
+        .header {
+            background: var(--white);
+            border-bottom: 3px solid var(--gold);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.6rem;
+        }
+        .logo-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--charcoal);
+        }
+        .logo-text span {
+            font-size: 0.75rem;
+            color: var(--gold-dark);
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .nav-links a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--gold-dark);
+        }
+        .contact-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            transition: all 0.3s;
+        }
+        .btn-telegram {
+            background: var(--charcoal);
+            color: var(--white);
+        }
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: var(--white);
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(28,28,28,0.85) 0%, rgba(44,44,44,0.9) 100%),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 2rem;
