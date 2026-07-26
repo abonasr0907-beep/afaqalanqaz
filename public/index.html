@@ -7,7 +7,6 @@
     <meta name="description" content="مكتب آفاق الإنجاز العقاري - خبرة 20 عاماً في تسويق الأراضي الزراعية والسكنية والاستراحات بالرياض والخرج">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --gold: #C9A961;
@@ -34,7 +33,7 @@
             line-height: 1.6;
         }
 
-        /* Header - Architectural Style */
+        /* Header */
         .header {
             background: var(--white);
             border-bottom: 3px solid var(--gold);
@@ -50,6 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
         }
         .logo {
             display: flex;
@@ -67,14 +67,12 @@
             color: var(--white);
             font-size: 1.6rem;
             box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
-            border: 2px solid var(--gold-light);
         }
         .logo-text h1 {
             font-family: 'Playfair Display', serif;
             font-size: 1.6rem;
             font-weight: 900;
             color: var(--charcoal);
-            letter-spacing: 0.5px;
         }
         .logo-text span {
             font-size: 0.75rem;
@@ -82,37 +80,22 @@
             background: linear-gradient(135deg, var(--cream) 0%, var(--cream-dark) 100%);
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
-            border: 1px solid var(--gold-light);
             display: inline-block;
             margin-top: 0.3rem;
         }
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
         .nav-links a {
             color: var(--charcoal);
             text-decoration: none;
             font-weight: 700;
             transition: all 0.3s;
-            position: relative;
-            padding: 0.5rem 0;
-        }
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s;
         }
         .nav-links a:hover {
             color: var(--gold-dark);
-        }
-        .nav-links a:hover::after {
-            width: 100%;
         }
         .contact-buttons {
             display: flex;
@@ -129,513 +112,16 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 0.95rem;
         }
         .btn-telegram {
             background: var(--charcoal);
             color: var(--white);
-            border: 2px solid var(--charcoal);
-        }
-        .btn-telegram:hover {
-            background: transparent;
-            color: var(--charcoal);
         }
         .btn-gold {
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
             color: var(--white);
-            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
-        }
-        .btn-gold:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(201, 169, 97, 0.4);
         }
 
-        /* Hero Section - Architectural */
+        /* Hero */
         .hero {
-            background: linear-gradient(135deg, rgba(28,28,28,0.85) 0%, rgba(44,44,44,0.9) 100%),
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            padding: 6rem 2rem;
-            text-align: center;
-            color: var(--white);
-            position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-        }
-        .hero h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-        .hero h2 span {
-            color: var(--gold);
-        }
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.95;
-            font-weight: 300;
-        }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(201, 169, 97, 0.2);
-            border: 2px solid var(--gold);
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            margin-top: 1rem;
-        }
-
-        /* Search Box - Elegant */
-        .search-box {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
-            max-width: 1200px;
-            margin: -4rem auto 4rem;
-            position: relative;
-            border: 2px solid var(--gold-light);
-        }
-        .search-box::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: var(--gold);
-            border-radius: 2px;
-        }
-        .tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid var(--cream-dark);
-            padding-bottom: 1rem;
-        }
-        .tab {
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-            background: var(--cream);
-            color: var(--charcoal);
-        }
-        .tab.active {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: var(--white);
-            border-color: var(--gold);
-            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
-        }
-        .tab:hover:not(.active) {
-            background: var(--cream-dark);
-            border-color: var(--gold-light);
-        }
-        .filters {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-        }
-        .filter-group label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 700;
-            color: var(--charcoal);
-            font-size: 0.95rem;
-        }
-        .filter-group label i {
-            color: var(--gold);
-            margin-left: 0.5rem;
-        }
-        .filter-group select {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid var(--cream-dark);
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: var(--white);
-        }
-        .filter-group select:focus {
-            outline: none;
-            border-color: var(--gold);
-            box-shadow: 0 0 0 3px rgba(201, 169, 97, 0.1);
-        }
-        .btn-search {
-            background: var(--charcoal);
-            color: var(--white);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
-        }
-        .btn-search:hover {
-            background: var(--gold-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Properties Section */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 3rem;
-            padding-bottom: 1rem;
-            border-bottom: 3px solid var(--gold-light);
-        }
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--charcoal);
-        }
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 60px;
-            height: 3px;
-            background: var(--gold);
-            margin-top: 0.5rem;
-        }
-        .results-count {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: var(--white);
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            box-shadow: 0 4px 15px rgba(201, 169, 97, 0.3);
-        }
-
-        /* Property Cards - Architectural Luxury */
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 2.5rem;
-        }
-        .property-card {
-            background: var(--white);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            border: 1px solid var(--cream-dark);
-            position: relative;
-        }
-        .property-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .property-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 50px rgba(201, 169, 97, 0.2);
-        }
-        .property-card:hover::before {
-            opacity: 1;
-        }
-        .property-image {
-            position: relative;
-            height: 280px;
-            overflow: hidden;
-        }
-        .property-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s;
-        }
-        .property-card:hover .property-image img {
-            transform: scale(1.08);
-        }
-        .property-badge {
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: var(--white);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .property-featured {
-            position: absolute;
-            top: 1.2rem;
-            left: 1.2rem;
-            background: var(--charcoal);
-            color: var(--gold);
-            padding: 0.6rem 1.2rem;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            border: 2px solid var(--gold);
-        }
-        .property-content {
-            padding: 2rem;
-        }
-        .property-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            color: var(--charcoal);
-            line-height: 1.3;
-        }
-        .property-location {
-            color: var(--bronze);
-            font-size: 0.95rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 600;
-        }
-        .property-location i {
-            color: var(--gold);
-        }
-        .property-features {
-            display: flex;
-            gap: 0.6rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
-        .feature-tag {
-            background: var(--cream);
-            color: var(--charcoal);
-            padding: 0.4rem 0.9rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border: 1px solid var(--cream-dark);
-            transition: all 0.3s;
-        }
-        .feature-tag:hover {
-            background: var(--gold-light);
-            border-color: var(--gold);
-        }
-        .property-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--cream);
-        }
-        .property-price {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--gold-dark);
-        }
-        .property-price span {
-            font-size: 0.9rem;
-            color: var(--bronze);
-            font-weight: 600;
-            font-family: 'Tajawal', sans-serif;
-        }
-        .property-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
-        .btn-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 10px;
-            border: 2px solid var(--cream-dark);
-            background: var(--white);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            color: var(--charcoal);
-        }
-        .btn-icon:hover {
-            background: var(--gold);
-            border-color: var(--gold);
-            color: var(--white);
-            transform: scale(1.1);
-        }
-        .btn-whatsapp-sm {
-            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
-            color: var(--white);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            transition: all 0.3s;
-            font-size: 0.95rem;
-        }
-        .btn-whatsapp-sm:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
-        }
-
-        /* After-Sales Services Section - NEW */
-        .services-section {
-            background: linear-gradient(135deg, var(--charcoal) 0%, var(--charcoal-light) 100%);
-            padding: 5rem 2rem;
-            margin: 5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .services-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-        }
-        .services-section::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
-        }
-        .services-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .services-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        .services-header h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 900;
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-        .services-header h3 span {
-            color: var(--gold);
-        }
-        .services-header p {
-            color: var(--cream-dark);
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        .service-card {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(201, 169, 97, 0.2);
-            border-radius: 16px;
-            padding: 2.5rem;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.4s;
-        }
-        .service-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--gold);
-            background: rgba(201, 169, 97, 0.1);
-        }
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 8px 25px rgba(201, 169, 97, 0.3);
-        }
-        .service-card h4 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
-        .service-card p {
-            color: var(--cream-dark);
-            font-size: 1rem;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-        }
-        .service-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            color: var(--gold);
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s;
-            padding: 0.8rem 1.5rem;
-            border: 2px solid var(--gold);
-            border-radius: 8px;
-        }
-        .service-btn:hover {
-            background: var(--gold);
-            color: var(--charcoal);
-            transform: translateX(-5px);
-        }
-
-        /* About Section */
-        .about-section {
-            background: var(--white);
-            padding: 5rem 2r
+            background: linear-gradient(135deg, r
