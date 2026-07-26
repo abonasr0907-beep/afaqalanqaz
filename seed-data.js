@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Property = require('./models/Property');
 
 const properties = [
-  // أراضي زراعية (10)
+  // ===== أراضي زراعية (10) =====
   {
     title: "أرض زراعية 5000م مع نخيل مثمر - الهياثم",
     description: "أرض زراعية خصبة مع نخيل مثمر، بئر ارتوازي، موقع ممتاز قريب من الطريق الرئيسي",
@@ -81,4 +81,4 @@ const properties = [
     title: "مزرعة صغيرة 2000م للمبتدئين",
     description: "مزرعة صغيرة مثالية للمبتدئين في الزراعة، كاملة الخدمات",
     category: "agricultural",
-    location: "الخرج - �
+    location: "ا
